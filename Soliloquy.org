@@ -1,0 +1,316 @@
+#+title: Emacs: An Editor for a Lifetime
+#+author: Jackson Ray Hamilton
+
+* My Honeymoon
+
+Back in my college days, having reached the age of adulthood, I decided it was time to choose my first "real" editor.  Essentially, it was time for me to settle down and marry.
+
+I had already made the exciting transition from the Microsoft world to that of Ubuntu, and soon thereafter adopted Debian.  Richard Stallman's philosophy was thoroughly-imbued in this freedom fighter from a young age!  I had also heard the names "Emacs" and "Vi" mentioned in passing, which made me curious.  One afternoon, after finishing my Computer Science classwork, I found a quiet spot outside my community college's tennis courts.  It was a somewhat-unusual place for programming, but there happened to be a power outlet there, and the space felt cozy to me.  I sat cross-legged on the ground, computer cradled in my lap, and I started the Emacs tutorial.
+
+Learning the arcane default keyboard shortcuts made me feel like an inductee into an exclusive secret society.  I loved it!!
+
+Even though Eclipse was an ostensibly-superior tool for developing Java programs, my self-developed "javac" compilation shortcut, coupled with my quick mastery of my new editor's navigation controls, made me feel much more engaged with my coursework and proud of my results.
+
+Soon I would take a computer architecture class in which my classmates and I were tasked to build our own programming language.  Emacs was easily able to highlight this language with a new editing mode I created in Emacs Lisp.  The opportunity to casually craft Lisp code throughout my day was (and remains) a feature of my editor which keeps me excited and engaged.  Lisp is fun to write!
+
+When I migrated to the working world, my "init.el" came with me.  Emacs, along with my personal configuration, would each continue to grow and evolve, as did I, and as did my industry over the next decade.
+
+* Making My Own Kitchen Sink
+
+Emacs, and its packages, provide a more-or-less comprehensive suite of tools for editing text - and ultimately, for building projects and producing code.  However, it's not all plug-and-play.  In this ecosystem, there are lots of settings you need to tweak and tools you need to discover, install, and master, in order to craft an experience that's best for you.  What you'll have by the end of your customization journey is a "kitchen sink" - a workspace in which you can effortlessly navigate codebases and maintain them.  That's what I feel I've achieved over the last decade+ of using Emacs.
+
+After a while, it felt like I had run out of things to customize - or maybe I was just tired of it.  My configuration would "stabilize" for a while.  However, as the field of programming continues to evolve, and with exciting projects being created - and abandoned - so frequently, the tides of change inevitably sway us to adapt to new technological advancements.  Overall, I feel that Emacs has proven to be quite adaptable.
+
+* The Ins and Outs of My Configuration
+
+** Theme and Appearance
+
+Out-of-the-box, GUI builds of Emacs look hideous.  However, with a few simple steps, I believe Emacs can be made to look "cool:"
+
+- Disable unnecessary UI elements, like the toolbar and scrollbar
+- Configure a font that is both readable and beautiful
+- Override the default theme with a stylish dark theme, incorporating iconography
+
+For the font, I love Monaco on macOS.  A size of "16" accomodates my failing eyesight.
+
+The theme I've been satisfied with for the past few years has been =zerodark-theme=.  Note you need to run the command =all-the-icons-install-fonts= (once) to install the iconography for =zerodark-theme= at the system level.
+
+*** Config
+
+#+BEGIN_SRC elisp
+  (setq inhibit-splash-screen t)
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+
+  (defconst my-default-font
+    (cond
+     ((eq system-type 'darwin)
+      "monaco 16")
+     ((eq system-type 'windows-nt)
+      "consolas 16")
+     (t
+      "monospace 16")))
+
+  (set-frame-font my-default-font)
+  (add-to-list 'default-frame-alist `(font . ,my-default-font))
+
+  (load-theme 'zerodark t)
+  (zerodark-setup-modeline-format)
+#+END_SRC
+
+** Standardization
+
+I no longer use Emacs' (crazy) default keymap.  (The one from the Emacs tutorial.)  It was fun to learn initially, but not to use regularly.  The rest of my OS uses "normal" bindings, and I believe my editor should behave the same.
+
+Enabling =cua-mode= normalizes a few common editing shortcuts:
+
+- =Ctrl+Z= to undo
+- =Ctrl+X= to cut
+- =Ctrl+C= to copy
+- =Ctrl+V= to paste
+
+The remaining shortcuts that I'd consider "standard" - and especially-useful for everyday editing - need to be configured manually:
+
+- =Ctrl+A= to "select all"
+- =Ctrl+O= to open files
+- =Ctrl+B= to switch buffers (i.e. switch between files)
+- =Ctrl+S= to save
+- =Ctrl+W= to close a buffer (i.e. a file)
+- =Ctrl+F= to search
+- =Ctrl+R= to find and replace
+
+*** Config
+
+#+BEGIN_SRC elisp
+  (cua-mode)
+
+  (keymap-global-set "C-a" #'mark-whole-buffer)
+  (keymap-global-set "C-o" #'find-file)
+  (keymap-global-set "C-b" #'switch-to-buffer)
+  (keymap-global-set "C-s" #'save-buffer)
+  (keymap-global-set "C-w" #'kill-current-buffer)
+  (keymap-global-set "C-f" #'isearch-forward)
+  (keymap-global-set "C-r" #'query-replace)
+#+END_SRC
+
+It frustrates me that Emacs puts itself out-of-reach to anyone except highly-patient adepts willing to learn its strange default keymap, or else to those with the motivation to learn how to fix it.  Thankfully, it only takes a few lines of config to resolve this discomfort and make Emacs "feel like home."
+
+** Navigation
+
+*** Buffers
+
+To move around buffers (i.e. files), I alternate between the following methods:
+
+- Trackpad/mouse
+- The four arrow keys (sometimes with =Alt=, i.e. =Option= on Mac, to skip over words)
+- =Alt+M= to jump to where indentation begins (usually more useful than beginning-of-line)
+- =Ctrl+E= to jump to end-of-line
+- =Alt+<= (i.e. =Alt+Shift+,=) to jump to beginning-of-file
+- =Alt+>= (i.e. =Alt+Shift+.=) to jump to end-of-file
+- =Ctrl+F=
+
+Besides =Ctrl+F=, these are all default bindings - no config necessary.
+
+*** Files
+
+To open files, I alternate between the following methods:
+
+- =Ctrl+B= to select an already-open file
+- =Ctrl+O= to select a file from the filesystem
+- =Ctrl+/= to list files (=ls -la=) and open from the list
+
+Emacs offers a text-based, interactive view of your filesystem, similar to =ls -la= in Mac/Linux shells.  It's accessible via "Dired" using =dired-jump=, which I have bound to =Ctrl+/=.  (Mnemonic: "/" is the character used to denote "directory" in Mac/Linux, and you're "opening the directory.")
+
+#+BEGIN_SRC elisp
+  (keymap-global-set "C-/" #'dired-jump)
+#+END_SRC
+
+I prefer Dired to a "tree view" because I can focus on one directory at a time, then close the view.
+
+As I use Emacs, I tend to have a large number of files open at a time.  Instead of managing tabs (neverending clutter), Emacs invisibly manages a list of my open files for me.  I allow my list of open files to grow for a while, and I use fuzzy matching to quickly narrow and select from this large list via a compact view, "Ido."
+
+Ido ("interactive do") is a user-friendly interface that can be enabled for selecting files in Emacs.  It is enhanced by the packages =ido-completing-read+= (enabling Ido "everywhere" in Emacs) and =flx-ido= (enabling fuzzy matching).
+
+#+BEGIN_SRC elisp
+  (require 'ido)
+  (ido-mode 1)
+  (ido-everywhere 1)
+  (ido-ubiquitous-mode 1)
+  (flx-ido-mode 1)
+  (setq ido-enable-flex-matching t)
+  (setq ido-use-faces nil) ; disable ido faces to see flx highlights
+  (setq gc-cons-threshold 20000000) ; recommended for better GC with flx
+#+END_SRC
+
+** Text Selection
+
+In Emacs you can select text with your trackpad/mouse, or by setting mark with =Ctrl+SPACE= and moving point with keyboard commands to manually create a region.
+
+There is also a package you can install called =expand-region= which can help you to automatically select text by semantic units.  I highly-recommend it as it takes much of the precision work out of selecting text.
+
+- =Ctrl+== to create or expand a selection from your current position
+- =Ctrl+PLUS= (i.e. =Ctrl+Shift+==) to contract selection
+
+*** Config
+
+#+BEGIN_SRC elisp
+  (keymap-global-set "C-=" #'er/expand-region)
+  (keymap-global-set "C-+" #'er/contract-region)
+#+END_SRC
+
+** Screen Splitting
+
+Emacs has commands to "split screens," which it refers to as "windows."  I like to bind these to =Ctrl+NUMBER=:
+
+- =Ctrl+0= to "minimize" the current window (likely maximizing another)
+- =Ctrl+1= to maximize the current window (if there's a split)
+- =Ctrl+2= to split vertically
+- =Ctrl+3= to split horizontally
+
+The mnemonic here is:
+
+- =Ctrl+0=: "reduce to nothing (0)"
+- =Ctrl+1=: "make it the only one (1)"
+- =Ctrl+2=: "split it in two (2)"
+- =Ctrl+3=: like =Ctrl+2=, but the "other" variant
+
+You can split screens an arbitrary number of ways, but I usually either have a single window maximized at a time, or temporarily have the screen split into two parts vertically.  A horizontal split is occasionally more useful depending on the format of the documents you have open.
+
+*** Config
+
+#+BEGIN_SRC elisp
+  (keymap-global-set "C-0" #'delete-window)
+  (keymap-global-set "C-1" #'delete-other-windows)
+  (keymap-global-set "C-2" #'split-window-below)
+  (keymap-global-set "C-3" #'split-window-right)
+#+END_SRC
+
+** Quick Access Shortcuts
+
+From =F5= through =F9=, Emacs provides no default bindings.  I decided to make this range of keys my "command center" for my most-frequently-used and most-powerful commands.
+
+*** F5: Open Emacs Config File
+
+Since the beauty of Emacs is in customizing the experience to your liking, you frequently find yourself opening and editing your config file.  I opened it so often that I decided to just dedicate a special key to it.  (Surprised?)
+
+#+BEGIN_SRC elisp
+  (defun my-find-configuration ()
+    "Open the Emacs configuration file."
+    (interactive)
+    (find-file (concat user-emacs-directory "init.el")))
+
+  (keymap-global-set "<f5>" #'my-find-configuration)
+#+END_SRC
+
+*** F6: Restart Emacs
+
+Whenever you update your config file, you have the option to either manually evaluate the Lisp forms therein to apply the configuration changes directly to the current instance - OR, you can simply restart Emacs, and all the forms will be evaluated "freshly."  Often, testing configuration changes is easiest with a quick restart.
+
+Emacs has a built-in command called =restart-emacs=, but I recommend installing the 3rd-party package with the same name.  It provides a version of the command that seems to work more reliably than the built-in one.
+
+#+BEGIN_SRC elisp
+  (require 'restart-emacs) ; load 3rd-party version
+
+  (defun my-restart ()
+    "Prompt whether to restart Emacs."
+    (interactive)
+    (when (y-or-n-p "Restart?")
+      (restart-emacs)))
+
+  (keymap-global-set "<f6>" #'my-restart)
+#+END_SRC
+
+*** F7: Git Interface
+
+Emacs is blessed with a very powerful and user-friendly interface to Git called "Magit."  Magit makes working with Git much easier than the standard command-line interface, and without any noticeable sacrifices in functionality.  I consider Magit one of the most important tools in my toolbelt during a day dedicated to coding.
+
+With Magit, all Git commands have 1-letter shortcuts, making them painless to invoke:
+
+- =F7= to see changes and invoke other commands
+- =TAB= to toggle diffs
+- =s= to stage files/hunks
+- =A= to cherry-pick
+- =b= to branch
+- =c= to commit
+- =F= to pull
+- =l= to view commit log
+- =P= to push
+- =r= to rebase
+- =V= to revert
+- =z= to stash
+
+Magit can also be combined with Ido for easy access to all branch and tag names (for when you need to switch to them).  Use the package =magit-ido= for that integration.
+
+#+BEGIN_SRC elisp
+  (require 'magit)
+  (require 'magit-ido)
+
+  (keymap-global-set "<f7>" #'magit-status)
+  (setq magit-completing-read-function #'magit-ido-completing-read)
+#+END_SRC
+
+*** F8: Project Management
+
+When working on a software project, it's common to search for files and text within the scope of a project's root directory - as opposed to from the scope of the whole filesystem, or from miscellaneous subdirectories.  Sometimes you may also wish to "find and replace" across files in a project.
+
+The Emacs package "Projectile" automatically detects the root directory of the project associated with any file you have open, and then it performs searches from there.  The package can also be configured to filter out uninteresting files/directories from searches; simply create a =.projectile= file in the project root, and list filename patterns to ignore.
+
+I prefer Projectile's "dynamic project actions" to the model of "opening a project" seen in other editors.  Other editors lock you into editing one project per editor instance; however, in my experience, it's common to hop between projects, especially those that depend on each other.  Having a single editor instance to manage multiple projects at once feels convenient.
+
+Like Magit, Projectile provides a suite of 1-letter shortcut keys to perform its various operations:
+
+- =F8= to choose a project-based command
+- =f= to find a file by name within the project
+- =g= to search the project's files with Grep
+- =r= to find and replace, interactively, file-by-file
+
+#+BEGIN_SRC elisp
+  (projectile-mode)
+
+  (keymap-global-set "<f8>" #'projectile-commander)
+#+END_SRC
+
+*** F9: AI Assistant
+
+All of Emacs' functionality aids programmers in the authorship of formal languages.  It remains important that there are tools available for exploring directories and examining files, as well as for precisely editing and quickly searching.
+
+However, AI coding assistants have become impressively-capable of converting natural languages into code, massively reducing the levels of manual exploration, examination, editing, and searching required to create working applications.  It's becoming obvious to more and more developers that LLMs are one of the most convenient and powerful tools now available, in terms of understanding, planning, templating, and debugging.
+
+Claude Code is my coding assistant of choice.  I was very happy with the results from Anthropic's Sonnet model, and Claude Code utilizes Sonnet beautifully.  I use it to write most of my code and to plan and implement most of the changes I make.  The integrations with Linear and Figma also enable the tool to automatically implement most product requirements as specified by my teammates at work.
+
+I use =claude-code.el= (by Steve Molitor) in order to manage Claude Code instances inside Emacs on a per-project basis.  Like Magit and Projectile, =claude-code.el= provides a suite of 1-letter shortcut keys to help me interact with Claude Code:
+
+- =F9= to choose a command
+- =c= to start the assistant
+- =t= to open and switch to the assistant's window
+- =z= to enable "read-only" mode in the assistant window (navigate/select output)
+
+#+BEGIN_SRC elisp
+  (require 'claude-code)
+
+  (setq claude-code-toggle-auto-select t)
+  (setq claude-code-eat-read-only-mode-cursor-type '(bar nil nil))
+
+  (keymap-global-set "<f9>" #'claude-code-transient)
+#+END_SRC
+
+*** Other Commands
+
+All of Emacs' commands are available explicitly via =Alt+X=.  For any commands that couldn't fit into the command center, access them here.  Ido completion is available here via the =ido-completing-read+= package, but there is also a further enhancement available via the =amx= package, which will sort your most-used commands to the front of the completions, as well as display any keybindings for the listed commands.
+
+#+BEGIN_SRC elisp
+  (amx-mode 1)
+#+END_SRC
+
+** TODO Coding with JavaScript/TypeScript
+
+*** Syntax Checking
+
+*** Autocompletion (simple/advanced)
+
+*** Snippets
+
+** TODO Writing with Markdown and Org
+
+*** Generating Previews
