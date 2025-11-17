@@ -9,7 +9,7 @@
 
 ;; List of packages you want installed
 (setq package-selected-packages
-      '(amx expand-region flx-ido ido-completing-read+
+      '(amx eat expand-region flx-ido ido-completing-read+
         magit magit-ido projectile restart-emacs))
 
 ;; VC packages (installed from version control)
