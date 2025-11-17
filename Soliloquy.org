@@ -334,3 +334,9 @@ All of Emacs' commands are available explicitly via =Alt+X=.  For any commands t
 ** TODO Writing with Markdown and Org
 
 *** Generating Previews
+
+* What's Mine is Yours
+
+Like what you've read about here?  I went ahead and packaged up all my essential configs - everything covered in this document - into a handy "starter config" that you can download and use to initialize your own Emacs installation.  It's right here in this directory: "init.el"
+
+If there's anything you want to add, change, or remove about my config, then go for it!  You have your own copy now and you can make it your own.  Or, start from scratch, like I did, and pull in whatever bits of mine that you like.
