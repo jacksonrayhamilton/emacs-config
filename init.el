@@ -34,6 +34,13 @@
 (keymap-global-set "C-f" #'isearch-forward)
 (keymap-global-set "C-r" #'query-replace)
 
+(require 'dired)
+
+;; Carry over global remappings to modes
+(define-key dired-mode-map (kbd "C-o") #'find-file)
+(define-key isearch-mode-map (kbd "C-v") #'isearch-yank-kill)
+(define-key isearch-mode-map (kbd "C-f") #'isearch-repeat-forward)
+
 ;;; Navigation
 
 (keymap-global-set "C-/" #'dired-jump)
@@ -47,6 +54,12 @@
 (setq ido-enable-flex-matching t)
 (setq ido-use-faces nil) ; disable ido faces to see flx highlights
 (setq gc-cons-threshold 20000000) ; recommended for better GC with flx
+
+(defun my-ido-setup-hook ()
+  ;; Escape hatch to open directories via `find-file'
+  (define-key ido-completion-map (kbd "C-o") #'ido-fallback-command))
+
+(add-hook 'ido-setup-hook #'my-ido-setup-hook)
 
 ;;; Text Selection
 
