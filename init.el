@@ -1,5 +1,35 @@
 ;; -*- lexical-binding: t; -*-
 
+;;; Packages
+
+(require 'package)
+(require 'package-vc)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(package-initialize)
+
+;; List of packages you want installed
+(setq package-selected-packages
+      '(amx expand-region flx-ido ido-completing-read+
+        magit magit-ido projectile restart-emacs))
+
+;; VC packages (installed from version control)
+(setq package-vc-selected-packages
+  '((claude-code :url "https://github.com/jacksonrayhamilton/claude-code.el")
+    (zerodark-theme :url "https://github.com/jacksonrayhamilton/zerodark-theme"
+                    :branch "optional-dependencies")))
+
+;; Refresh and install missing packages at startup
+(unless package-archive-contents
+  (package-refresh-contents))
+
+(dolist (pkg package-selected-packages)
+  (unless (package-installed-p pkg)
+    (package-install pkg)))
+
+(dolist (pkg package-vc-selected-packages)
+  (unless (package-installed-p (car pkg))
+    (package-vc-install pkg)))
+
 ;;; Theme and Appearance
 
 (setq inhibit-splash-screen t)
