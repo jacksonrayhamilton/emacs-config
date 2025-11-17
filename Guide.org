@@ -19,7 +19,7 @@ Out-of-the-box, GUI builds of Emacs look hideous.  However, with a few simple st
 - Configure a font that is both readable and beautiful
 - Override the default theme with a stylish dark theme, incorporating iconography
 
-For the font, I love Monaco on macOS.  A size of "16" accomodates my failing eyesight.
+For the font, I love Monaco on a Mac.  A size of "16" accomodates my failing eyesight.
 
 The theme I've been satisfied with for the past few years has been =zerodark-theme=.  Note you need to run the command =all-the-icons-install-fonts= (once) to install the iconography for =zerodark-theme= at the system level.
 
