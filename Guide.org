@@ -21,7 +21,7 @@ Out-of-the-box, GUI builds of Emacs look hideous.  However, with a few simple st
 
 For the font, I love Monaco on a Mac.  A size of "16" accomodates my failing eyesight.
 
-The theme I've been satisfied with for the past few years has been =zerodark-theme=.  Note you need to run the command =all-the-icons-install-fonts= (once) to install the iconography for =zerodark-theme= at the system level.
+The theme I've been satisfied with for the past few years has been =zerodark-theme=.  Note that you need to run the command =all-the-icons-install-fonts= (once) to install the iconography for =zerodark-theme= at the system level.
 
 *** Config
 
@@ -84,7 +84,7 @@ The remaining shortcuts that I'd consider "standard" - and especially-useful for
 
 It frustrates me that Emacs puts itself out-of-reach to anyone except highly-patient adepts willing to learn its strange default keymap, or else to those with the motivation to learn how to fix it.  Thankfully, it only takes a few lines of config to resolve this discomfort and make Emacs "feel like home."
 
-Also, I recommend remaping your "Caps Lock" key to an additional =Ctrl= at the OS level.  It's a big, unimportant key, which is often a lot easier to press than the actual "Control" key on a keyboard, as far as all these keyboard shortcuts are concerned.
+Also, I recommend remapping your "Caps Lock" key to an additional =Ctrl= at the OS level.  It's a big, unimportant key, which is often a lot easier to press than the actual "Control" key on a keyboard, as far as all these keyboard shortcuts are concerned.
 
 ** Navigation
 
