@@ -1,0 +1,15 @@
+#+title: Emacs Config
+#+author: Jackson Ray Hamilton
+
+Contained here is a "starter config" that:
+
+- Fixes up some of the "questionable" defaults in Emacs, and...
+- Equips users with some really powerful tools for working on software projects!
+
+Install the latest Emacs and give it a try!  Save the file "init.el" to a directory in your home called: =~/.emacs.d/=.  Then launch the Emacs app.
+
+You can read my complete guide to this config in: "Guide.org"
+
+You can also learn about how I got started on my own Emacs journey in: "Backstory.org"
+
+Enjoy!
