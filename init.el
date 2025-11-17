@@ -96,6 +96,18 @@
 (keymap-global-set "C-=" #'er/expand-region)
 (keymap-global-set "C-+" #'er/contract-region)
 
+;;; Search
+
+(defun my-isearch-with-region ()
+  "Use region as the isearch text."
+  (when mark-active
+    (let ((region (funcall region-extract-function nil)))
+      (deactivate-mark)
+      (isearch-push-state)
+      (isearch-yank-string region))))
+
+(add-hook 'isearch-mode-hook #'my-isearch-with-region)
+
 ;;; Screen Splitting
 
 (keymap-global-set "C-0" #'delete-window)

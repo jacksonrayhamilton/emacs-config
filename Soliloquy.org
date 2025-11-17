@@ -159,6 +159,22 @@ There is also a package you can install called =expand-region= which can help yo
   (keymap-global-set "C-+" #'er/contract-region)
 #+END_SRC
 
+** Search
+
+Often I want to search for additional instances of a bit of text that's in a file.  Here's some config to make it so that, if you use =Ctrl+F= while you have some text selected, then the selected text is what gets searched-for.  (Works really well with =expand-region=.)
+
+#+BEGIN_SRC elisp
+  (defun my-isearch-with-region ()
+    "Use region as the isearch text."
+    (when mark-active
+      (let ((region (funcall region-extract-function nil)))
+        (deactivate-mark)
+        (isearch-push-state)
+        (isearch-yank-string region))))
+
+  (add-hook 'isearch-mode-hook #'my-isearch-with-region)
+#+END_SRC
+
 ** Screen Splitting
 
 Emacs has commands to "split screens," which it refers to as "windows."  I like to bind these to =Ctrl+NUMBER=:
