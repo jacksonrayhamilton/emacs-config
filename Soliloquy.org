@@ -96,6 +96,8 @@ The remaining shortcuts that I'd consider "standard" - and especially-useful for
 
 It frustrates me that Emacs puts itself out-of-reach to anyone except highly-patient adepts willing to learn its strange default keymap, or else to those with the motivation to learn how to fix it.  Thankfully, it only takes a few lines of config to resolve this discomfort and make Emacs "feel like home."
 
+Also, I recommend remaping your "Caps Lock" key to an additional =Ctrl= at the OS level.  It's a big, unimportant key, which is often a lot easier to press than the actual "Control" key on a keyboard, as far as all these keyboard shortcuts are concerned.
+
 ** Navigation
 
 *** Buffers
@@ -205,6 +207,8 @@ You can split screens an arbitrary number of ways, but I usually either have a s
 ** Quick Access Shortcuts
 
 From =F5= through =F9=, Emacs provides no default bindings.  I decided to make this range of keys my "command center" for my most-frequently-used and most-powerful commands.
+
+If you use a Mac, you can make it so you don't need to press =fn= to trigger your =F= keys, like normal.  I'd recommend enabling that setting, as the shortcuts will be much more ergonomic.
 
 *** F5: Open Emacs Config File
 
