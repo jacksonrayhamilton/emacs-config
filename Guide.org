@@ -1,25 +1,13 @@
-#+title: Emacs: An Editor for a Lifetime
+#+title: Guide to Emacs: An Editor for a Lifetime
 #+author: Jackson Ray Hamilton
-
-* My Honeymoon
-
-Back in my college days, having reached the age of adulthood, I decided it was time to choose my first "real" editor.  Essentially, it was time for me to settle down and marry.
-
-I had already made the exciting transition from the Microsoft world to that of Ubuntu, and soon thereafter adopted Debian.  Richard Stallman's philosophy was thoroughly-imbued in this freedom fighter from a young age!  I had also heard the names "Emacs" and "Vi" mentioned in passing, which made me curious.  One afternoon, after finishing my Computer Science classwork, I found a quiet spot outside my community college's tennis courts.  It was a somewhat-unusual place for programming, but there happened to be a power outlet there, and the space felt cozy to me.  I sat cross-legged on the ground, computer cradled in my lap, and I started the Emacs tutorial.
-
-Learning the arcane default keyboard shortcuts made me feel like an inductee into an exclusive secret society.  I loved it!!
-
-Even though Eclipse was an ostensibly-superior tool for developing Java programs, my self-developed "javac" compilation shortcut, coupled with my quick mastery of my new editor's navigation controls, made me feel much more engaged with my coursework and proud of my results.
-
-Soon I would take a computer architecture class in which my classmates and I were tasked to build our own programming language.  Emacs was easily able to highlight this language with a new editing mode I created in Emacs Lisp.  The opportunity to casually craft Lisp code throughout my day was (and remains) a feature of my editor which keeps me excited and engaged.  Lisp is fun to write!
-
-When I migrated to the working world, my "init.el" came with me.  Emacs, along with my personal configuration, would each continue to grow and evolve, as did I, and as did my industry over the next decade.
 
 * Making My Own Kitchen Sink
 
-Emacs, and its packages, provide a more-or-less comprehensive suite of tools for editing text - and ultimately, for building projects and producing code.  However, it's not all plug-and-play.  In this ecosystem, there are lots of settings you need to tweak and tools you need to discover, install, and master, in order to craft an experience that's best for you.  What you'll have by the end of your customization journey is a "kitchen sink" - a workspace in which you can effortlessly navigate codebases and maintain them.  That's what I feel I've achieved over the last decade+ of using Emacs.
+Emacs, and its packages, provide a more-or-less comprehensive suite of tools for editing text - and ultimately, for building projects and producing code.  However, it's not all plug-and-play; in this ecosystem, there are lots of settings you need to tweak and tools you need to discover, install, and master, in order to craft an experience that's best for you.  What you'll have by the end of your customization journey is a "kitchen sink" - a workspace in which you can effortlessly navigate codebases and maintain them.  That's what I feel I've achieved over the last decade+ of using Emacs.
 
-After a while, it felt like I had run out of things to customize - or maybe I was just tired of it.  My configuration would "stabilize" for a while.  However, as the field of programming continues to evolve, and with exciting projects being created - and abandoned - so frequently, the tides of change inevitably sway us to adapt to new technological advancements.  Overall, I feel that Emacs has proven to be quite adaptable.
+What follows are all the tips and tricks I have for anyone who wants to learn and master this awesome tool.  Everything here you can copy into your own config file, which can be saved to: =~/.emacs.d/init.el=
+
+A working config file implementing /all/ of this is also available in this directory; see "init.el"
 
 * The Ins and Outs of My Configuration
 
@@ -61,7 +49,7 @@ The theme I've been satisfied with for the past few years has been =zerodark-the
 
 ** Standardization
 
-I no longer use Emacs' (crazy) default keymap.  (The one from the Emacs tutorial.)  It was fun to learn initially, but not to use regularly.  The rest of my OS uses "normal" bindings, and I believe my editor should behave the same.
+I no longer use Emacs' (crazy) default keymap.  (The one described in the Emacs tutorial.)  It was fun to learn initially, but not to use regularly.  The rest of my OS uses "normal" bindings, and I believe my editor should behave the same.
 
 Enabling =cua-mode= normalizes a few common editing shortcuts:
 

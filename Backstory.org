@@ -1,0 +1,14 @@
+#+title: Backstory: My Honeymoon
+#+author: Jackson Ray Hamilton
+
+Back in my college days, having reached the age of adulthood, I decided it was time to choose my first "real" editor.  Essentially, it was time for me to settle down and marry.
+
+I had already made the exciting transition from the Microsoft world to that of Ubuntu, and soon thereafter adopted Debian.  Richard Stallman's philosophy was thoroughly-imbued in this freedom fighter from a young age!  I had also heard the names "Emacs" and "Vi" mentioned in passing, which made me curious.  One afternoon, after finishing my Computer Science classwork, I found a quiet spot outside my community college's tennis courts.  It was a somewhat-unusual place for programming, but there happened to be a power outlet there, and the space felt cozy to me.  I sat cross-legged on the ground, computer cradled in my lap, and I started the Emacs tutorial.
+
+Learning the arcane default keyboard shortcuts made me feel like an inductee into an exclusive secret society.  I loved it!!
+
+Even though Eclipse was an ostensibly-superior tool for developing Java programs, my self-developed "javac" compilation shortcut, coupled with my quick mastery of my new editor's navigation controls, made me feel much more engaged with my coursework and proud of my results.
+
+Soon I would take a Computer Architecture class in which my classmates and I were tasked to build our own programming language.  Emacs was easily able to highlight this language with a new editing mode I created in Emacs Lisp.  The opportunity to casually craft Lisp code throughout my day was (and remains) a feature of my editor which keeps me excited and engaged.  Lisp is fun to write!
+
+When I migrated to the working world, my "init.el" came with me.  Emacs, along with my personal configuration, would each continue to grow and evolve, as did I, and as did my industry over the next decade.
