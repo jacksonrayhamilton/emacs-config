@@ -448,9 +448,6 @@ Markdown mode provides syntax highlighting and editing commands for Markdown fil
   (require 'markdown-mode)
 
   (add-hook 'markdown-mode-hook #'visual-line-mode)
-
-  (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-  (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 #+END_SRC
 
 *** Org Mode

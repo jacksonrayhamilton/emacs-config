@@ -255,9 +255,6 @@
 
 (add-hook 'markdown-mode-hook #'visual-line-mode)
 
-(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-
 ;; Set the markdown preview command
 (setq markdown-command "marked")
 
