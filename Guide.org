@@ -435,21 +435,11 @@ YASnippet is a template system that lets you quickly insert common code patterns
 
 Create a =Snippets/js-ts-mode= directory in your =~/.emacs.d/= folder to store JavaScript snippets, and a =Snippets/typescript-ts-mode= directory for TypeScript snippets.  Each snippet is a small text file with special placeholders.
 
-** Writing with Markdown and Org
+** Writing with Org Mode
 
-Emacs supports both Markdown and Org Mode for writing documentation, notes, and other long-form text.  Both modes benefit from visual line wrapping, which makes prose easier to read and edit by wrapping lines at word boundaries instead of at a fixed column width.
+Org mode is Emacs' native format for structured documents.  It's incredibly powerful, supporting everything from simple note-taking to complex project planning and literate programming.  It's excellent for writing documentation, maintaining TODO lists, and creating structured content.
 
-*** Markdown
-
-Markdown mode provides syntax highlighting and editing commands for Markdown files.  Enabling =visual-line-mode= ensures text wraps naturally as you resize the window.
-
-#+BEGIN_SRC elisp
-  (add-hook 'markdown-mode-hook #'visual-line-mode)
-#+END_SRC
-
-*** Org Mode
-
-Org mode is Emacs' native format for structured documents.  It's incredibly powerful, supporting everything from simple note-taking to complex project planning and literate programming.  For basic writing, it's similar to Markdown but with more features.
+Enabling =visual-line-mode= makes prose easier to read and edit by wrapping lines at word boundaries instead of at a fixed column width.
 
 #+BEGIN_SRC elisp
   (add-hook 'org-mode-hook #'visual-line-mode)
@@ -457,21 +447,9 @@ Org mode is Emacs' native format for structured documents.  It's incredibly powe
 
 *** Generating Previews
 
-Both Markdown and Org files can be previewed as HTML in your browser.  This is useful for seeing how your document will look when rendered, especially if you're writing documentation that will be published online.
+Org files can be previewed as HTML in your browser.  This is useful for seeing how your document will look when rendered, especially if you're writing documentation that will be published online.
 
-For Markdown, install the =marked= command-line tool (=npm i -g marked=), then configure Emacs to use it:
-
-#+BEGIN_SRC elisp
-  (require 'markdown-mode)
-
-  ;; Set the markdown preview command
-  (setq markdown-command "marked")
-
-  ;; Bind Ctrl+P to preview
-  (define-key markdown-mode-map (kbd "C-p") #'markdown-preview)
-#+END_SRC
-
-For Org mode, Emacs has built-in HTML export functionality.  Here's a function that exports your Org file to HTML and opens it in your browser:
+Emacs has built-in HTML export functionality.  Here's a function that exports your Org file to HTML and opens it in your browser:
 
 #+BEGIN_SRC elisp
   (require 'ox) ; org export
@@ -485,7 +463,7 @@ For Org mode, Emacs has built-in HTML export functionality.  Here's a function t
   (define-key org-mode-map (kbd "C-p") #'my-org-preview)
 #+END_SRC
 
-In both modes, press =Ctrl+P= to preview your document in your default web browser.
+Press =Ctrl+P= to preview your document in your default web browser.
 
 * What's Mine is Yours
 

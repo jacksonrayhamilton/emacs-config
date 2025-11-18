@@ -10,8 +10,8 @@
 ;; List of packages you want installed
 (setq package-selected-packages
       '(amx auto-complete company eat expand-region flx-ido flycheck
-        ido-completing-read+ js-ts-defs magit magit-ido markdown-mode
-        projectile restart-emacs tide yasnippet))
+        ido-completing-read+ js-ts-defs magit magit-ido projectile
+        restart-emacs tide yasnippet))
 
 ;; VC packages (installed from version control)
 (setq package-vc-selected-packages
@@ -247,18 +247,6 @@
 
 ;; Enable snippets in programming modes
 (add-hook 'prog-mode-hook #'yas-minor-mode)
-
-;;; Markdown
-
-(require 'markdown-mode)
-
-(add-hook 'markdown-mode-hook #'visual-line-mode)
-
-;; Set the markdown preview command
-(setq markdown-command "marked")
-
-;; Bind Ctrl+P to preview
-(define-key markdown-mode-map (kbd "C-p") #'markdown-preview)
 
 ;;; Org Mode
 
