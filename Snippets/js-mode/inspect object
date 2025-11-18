@@ -1,0 +1,4 @@
+# -*- mode: snippet; -*-
+# name: inspect object
+# --
+console.log(util.inspect($1, { colors: true, depth: 10, showHidden: true }))

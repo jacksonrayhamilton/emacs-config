@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: preamble
+# --
+
+#+title: ${1:Title}
+#+author: `user-full-name`
+
+$0

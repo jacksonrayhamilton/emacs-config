@@ -240,13 +240,17 @@
 
 (yas-reload-all)
 
-;; Use Ctrl+Tab to expand snippets (avoiding conflicts with other tab uses)
+;; Use Ctrl+Tab to choose snippets (avoiding conflicts with other tab uses)
 (define-key yas-minor-mode-map (kbd "<tab>") nil)
 (define-key yas-minor-mode-map (kbd "TAB") nil)
 (define-key yas-minor-mode-map (kbd "<C-tab>") #'yas-insert-snippet)
 
-;; Enable snippets in programming modes
 (add-hook 'prog-mode-hook #'yas-minor-mode)
+(add-hook 'org-mode-hook #'yas-minor-mode)
+
+;; Helper used by snippets:
+(defun my-escape-single-quotes (str)
+  (replace-regexp-in-string "'" "\\\\'" str))
 
 ;;; Org Mode
 

@@ -414,7 +414,7 @@ For basic JavaScript projects without TypeScript, you can use a simpler autocomp
 
 *** Snippets
 
-YASnippet is a template system that lets you quickly insert common code patterns.  Type an abbreviation and press =Ctrl+TAB= to expand it into a full snippet, then tab through the placeholders to fill them in.
+YASnippet is a template system that lets you quickly insert common code patterns.  Press =Ctrl+TAB= to be prompted with a list of snippets, choose one with Ido-powered fuzzy matching, then tab through any placeholders to fill in the chosen snippet.
 
 #+BEGIN_SRC elisp
   (require 'yasnippet)
@@ -424,16 +424,27 @@ YASnippet is a template system that lets you quickly insert common code patterns
 
   (yas-reload-all)
 
-  ;; Use Ctrl+Tab to expand snippets (avoiding conflicts with other tab uses)
+  ;; Use Ctrl+Tab to choose snippets (avoiding conflicts with other tab uses)
   (define-key yas-minor-mode-map (kbd "<tab>") nil)
   (define-key yas-minor-mode-map (kbd "TAB") nil)
   (define-key yas-minor-mode-map (kbd "<C-tab>") #'yas-insert-snippet)
 
-  ;; Enable snippets in programming modes
   (add-hook 'prog-mode-hook #'yas-minor-mode)
+  (add-hook 'org-mode-hook #'yas-minor-mode)
+
+  ;; Helper used by snippets:
+  (defun my-escape-single-quotes (str)
+    (replace-regexp-in-string "'" "\\\\'" str))
 #+END_SRC
 
-Create a =Snippets/js-ts-mode= directory in your =~/.emacs.d/= folder to store JavaScript snippets, and a =Snippets/typescript-ts-mode= directory for TypeScript snippets.  Each snippet is a small text file with special placeholders.
+I've included several useful snippets for debugging JavaScript code.  These are productivity boosters that I use constantly:
+
+- =import util= - Imports Node.js's =util= module, which is needed for advanced object inspection
+- =inspect object= - Uses =util.inspect()= to log an object with colors, full depth, and hidden properties visible.  Perfect for debugging complex objects
+- =log expression= - Inserts =console.log('DEBUG <expression>', <expression>)= where the expression name is automatically populated.  This makes it easy to see both what you're logging and its value
+- =stack trace= - Generates a stack trace at the current point in your code without throwing an error.  Useful for understanding how you got to a particular line of code
+
+TypeScript inherits all the JavaScript snippets (via =.yas-parents=), and also includes a TypeScript-specific version of =stack trace= with proper type annotations.
 
 ** Writing with Org Mode
 
@@ -465,8 +476,22 @@ Emacs has built-in HTML export functionality.  Here's a function that exports yo
 
 Press =Ctrl+P= to preview your document in your default web browser.
 
+*** Org Mode Snippets
+
+YASnippet works great with Org mode too.  Here are the included snippets:
+
+- =preamble= - Quickly insert a document header with title and author fields
+- =src block= - Insert a source code block with syntax highlighting
+
+These snippets make it faster to create well-formatted Org documents.
+
 * What's Mine is Yours
 
-Like what you've read about here?  I went ahead and packaged up all my essential configs - everything covered in this document - into a handy "starter config" that you can download and use to initialize your own Emacs installation.  It's right here in this directory: "init.el"
+Like what you've read about here?  I went ahead and packaged up all my essential configs - everything covered in this document - into a handy "starter config" that you can download and use to initialize your own Emacs installation.
+
+To get started, copy these files/directories to your =~/.emacs.d/= directory:
+
+- =init.el= - The main configuration file
+- =Snippets/= - The complete snippets directory with all the JavaScript, TypeScript, and Org mode snippets
 
 If there's anything you want to add, change, or remove about my config, then go for it!  You have your own copy now and you can make it your own.  Or, start from scratch, like I did, and pull in whatever bits of mine that you like.

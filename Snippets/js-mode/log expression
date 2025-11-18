@@ -1,0 +1,4 @@
+# -*- mode: snippet; -*-
+# name: log expression
+# --
+console.log('DEBUG ${1:$(my-escape-single-quotes yas-text)}', $1)

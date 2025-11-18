@@ -1,0 +1,9 @@
+# -*- mode: snippet; -*-
+# name: stack trace
+# condition: (eq major-mode 'js-ts-mode)
+# --
+(function getStackTrace() {
+  const obj = {};
+  Error.captureStackTrace(obj, getStackTrace);
+  return obj.stack;
+})()
