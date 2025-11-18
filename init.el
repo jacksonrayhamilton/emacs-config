@@ -31,6 +31,26 @@
   (unless (package-installed-p (car pkg))
     (package-vc-install pkg)))
 
+;;; Grammars
+
+(require 'treesit)
+
+;; (Compatible with Emacs 30)
+(setq treesit-language-source-alist
+      '((javascript "https://github.com/tree-sitter/tree-sitter-javascript" "v0.23.1")
+        (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "v0.23.2" "tsx/src")
+        (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "v0.23.2" "typescript/src")))
+
+(defun my-treesit-install-all-languages ()
+  "Install all missing Tree-sitter grammars from `treesit-language-source-alist'."
+  (interactive)
+  (dolist (lang-source treesit-language-source-alist)
+    (let* ((lang (car lang-source)))
+      (unless (treesit-language-available-p lang)
+        (treesit-install-language-grammar lang)))))
+
+(add-hook 'emacs-startup-hook #'my-treesit-install-all-languages)
+
 ;;; Theme and Appearance
 
 (setq inhibit-splash-screen t)

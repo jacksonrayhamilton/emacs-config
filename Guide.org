@@ -313,15 +313,37 @@ All of Emacs' commands are available explicitly via =Alt+X=.  For any commands t
 
 ** Coding with JavaScript/TypeScript
 
-Modern Emacs includes tree-sitter support, which provides fast and accurate syntax highlighting for JavaScript and TypeScript.  By remapping the default modes to their tree-sitter variants, you get a much better editing experience out-of-the-box.
+JavaScript and TypeScript are the languages I write the most code in.  My setup for those languages is the most-sophisticated and battle-tested one that I can showcase.
+
+Modern Emacs includes tree-sitter support, which provides fast and accurate syntax highlighting and automatic indentation for JavaScript and TypeScript.  I recommend remapping the default mode for JavaScript to the tree-sitter variant.  For TypeScript, Emacs /only/ comes with tree-sitter variants (TS & TSX), but they're not enabled by default.
 
 #+BEGIN_SRC elisp
-  ;; Enable tree-sitter for JavaScript
   (add-to-list 'major-mode-remap-alist '(javascript-mode . js-ts-mode))
 
-  ;; Enable tree-sitter for TypeScript
   (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
   (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
+#+END_SRC
+
+Also, once, you will need to install the grammars for each of these modes.  You will need a C/C++ compiler and linker installed in order to do this.  The following code will try to download and compile the grammars the first time you open Emacs.  If you run into errors, and want to try again, then either restart Emacs, or manually invoke the command =my-treesit-install-all-languages= (via =Alt+X=).
+
+#+BEGIN_SRC elisp
+  (require 'treesit)
+
+  ;; (Compatible with Emacs 30)
+  (setq treesit-language-source-alist
+        '((javascript "https://github.com/tree-sitter/tree-sitter-javascript" "v0.23.1")
+          (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "v0.23.2" "tsx/src")
+          (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "v0.23.2" "typescript/src")))
+
+  (defun my-treesit-install-all-languages ()
+    "Install all missing Tree-sitter grammars from `treesit-language-source-alist'."
+    (interactive)
+    (dolist (lang-source treesit-language-source-alist)
+      (let* ((lang (car lang-source)))
+        (unless (treesit-language-available-p lang)
+          (treesit-install-language-grammar lang)))))
+
+  (add-hook 'emacs-startup-hook #'my-treesit-install-all-languages)
 #+END_SRC
 
 *** Syntax Checking
