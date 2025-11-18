@@ -445,8 +445,6 @@ Emacs supports both Markdown and Org Mode for writing documentation, notes, and 
 Markdown mode provides syntax highlighting and editing commands for Markdown files.  Enabling =visual-line-mode= ensures text wraps naturally as you resize the window.
 
 #+BEGIN_SRC elisp
-  (require 'markdown-mode)
-
   (add-hook 'markdown-mode-hook #'visual-line-mode)
 #+END_SRC
 
@@ -455,8 +453,6 @@ Markdown mode provides syntax highlighting and editing commands for Markdown fil
 Org mode is Emacs' native format for structured documents.  It's incredibly powerful, supporting everything from simple note-taking to complex project planning and literate programming.  For basic writing, it's similar to Markdown but with more features.
 
 #+BEGIN_SRC elisp
-  (require 'org-mode)
-
   (add-hook 'org-mode-hook #'visual-line-mode)
 #+END_SRC
 
@@ -467,6 +463,8 @@ Both Markdown and Org files can be previewed as HTML in your browser.  This is u
 For Markdown, install the =marked= command-line tool (=npm i -g marked=), then configure Emacs to use it:
 
 #+BEGIN_SRC elisp
+  (require 'markdown-mode)
+
   ;; Set the markdown preview command
   (setq markdown-command "marked")
 
