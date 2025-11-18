@@ -10,8 +10,8 @@
 ;; List of packages you want installed
 (setq package-selected-packages
       '(amx auto-complete company eat expand-region flx-ido flycheck
-        ido-completing-read+ magit magit-ido markdown-mode projectile
-        restart-emacs tide yasnippet))
+        ido-completing-read+ js-ts-defs magit magit-ido markdown-mode
+        projectile restart-emacs tide yasnippet))
 
 ;; VC packages (installed from version control)
 (setq package-vc-selected-packages
@@ -189,6 +189,7 @@
 ;;; JavaScript
 
 (require 'flycheck)
+(require 'js)
 
 ;; Enable tree-sitter for JavaScript
 (add-to-list 'major-mode-remap-alist '(javascript-mode . js-ts-mode))
@@ -197,6 +198,9 @@
   (flycheck-mode))
 
 (add-hook 'js-ts-mode-hook #'my-javascript-mode-hook)
+
+;; Jump to definition
+(define-key js-ts-mode-map (kbd "M-.") #'js-ts-defs-jump-to-definition)
 
 ;;; TypeScript
 

@@ -361,6 +361,24 @@ For JavaScript, simply enable =flycheck-mode= in =js-ts-mode=:
   (add-hook 'js-ts-mode-hook #'my-javascript-mode-hook)
 #+END_SRC
 
+*** Jumping to Definitions
+
+Being able to quickly jump to a function or variable's definition is essential when navigating large codebases.  The standard Emacs keybinding for this is =Alt+.=.
+
+For JavaScript, use the =js-ts-defs= package, which leverages tree-sitter to find definitions within the current file:
+
+#+BEGIN_SRC elisp
+  (require 'js)
+
+  (define-key js-ts-mode-map (kbd "M-.") #'js-ts-defs-jump-to-definition)
+#+END_SRC
+
+For TypeScript, Tide automatically provides intelligent jump-to-definition that understands TypeScript's type system and can follow imports across files.  No additional configuration is needed - it works out-of-the-box once Tide is set up.
+
+With these configured, you can place your cursor on any function or variable name and press =Alt+.= to jump to where it's defined.  Press =Alt+,= to jump back to where you were.
+
+*** TypeScript Language Server
+
 For TypeScript, use the Tide package, which provides deep integration with the TypeScript language server.  Tide handles both syntax checking and intelligent code completion.  You can also chain Tide's TypeScript checker with ESLint:
 
 #+BEGIN_SRC elisp
