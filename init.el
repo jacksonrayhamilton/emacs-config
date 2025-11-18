@@ -9,8 +9,9 @@
 
 ;; List of packages you want installed
 (setq package-selected-packages
-      '(amx eat expand-region flx-ido ido-completing-read+
-        magit magit-ido projectile restart-emacs))
+      '(amx auto-complete company eat expand-region flx-ido flycheck
+        ido-completing-read+ magit magit-ido markdown-mode projectile
+        restart-emacs tide yasnippet))
 
 ;; VC packages (installed from version control)
 (setq package-vc-selected-packages
@@ -164,6 +165,94 @@
 (setq claude-code-eat-read-only-mode-cursor-type '(bar nil nil))
 
 (keymap-global-set "<f9>" #'claude-code-transient)
+
+;;; JavaScript
+
+(require 'flycheck)
+
+;; Enable tree-sitter for JavaScript
+(add-to-list 'major-mode-remap-alist '(javascript-mode . js-ts-mode))
+
+(defun my-javascript-mode-hook ()
+  (flycheck-mode))
+
+(add-hook 'js-ts-mode-hook #'my-javascript-mode-hook)
+
+;;; TypeScript
+
+(require 'tide)
+(require 'company)
+
+;; Enable tree-sitter for TypeScript
+(add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
+
+(defun my-setup-tide ()
+  (tide-setup)
+  (flycheck-mode)
+  (company-mode))
+
+(add-hook 'typescript-ts-mode-hook #'my-setup-tide)
+(add-hook 'tsx-ts-mode-hook #'my-setup-tide)
+
+;; Check TypeScript, then ESLint
+(flycheck-add-next-checker 'typescript-tide 'javascript-eslint)
+(flycheck-add-next-checker 'tsx-tide 'javascript-eslint)
+
+;;; Auto Complete
+
+(require 'auto-complete)
+
+(global-auto-complete-mode t)
+(setq ac-auto-start 2)
+(setq ac-ignore-case nil)
+
+;;; Snippets
+
+(require 'yasnippet)
+
+;; Store snippets in your config directory
+(setq yas-snippet-dirs `(,(concat user-emacs-directory "Snippets")))
+
+(yas-reload-all)
+
+;; Use Ctrl+Tab to expand snippets (avoiding conflicts with other tab uses)
+(define-key yas-minor-mode-map (kbd "<tab>") nil)
+(define-key yas-minor-mode-map (kbd "TAB") nil)
+(define-key yas-minor-mode-map (kbd "<C-tab>") #'yas-insert-snippet)
+
+;; Enable snippets in programming modes
+(add-hook 'prog-mode-hook #'yas-minor-mode)
+
+;;; Markdown
+
+(require 'markdown-mode)
+
+(add-hook 'markdown-mode-hook #'visual-line-mode)
+
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+
+;; Set the markdown preview command
+(setq markdown-command "marked")
+
+;; Bind Ctrl+P to preview
+(define-key markdown-mode-map (kbd "C-p") #'markdown-preview)
+
+;;; Org Mode
+
+(require 'org)
+(require 'ox) ; org export
+
+(add-hook 'org-mode-hook #'visual-line-mode)
+
+(defun my-org-preview ()
+  (interactive)
+  (browse-url-of-buffer
+   (let ((org-export-show-temporary-export-buffer nil))
+     (org-html-export-as-html))))
+
+(define-key org-mode-map (kbd "C-p") #'my-org-preview)
 
 ;;; Custom
 

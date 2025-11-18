@@ -311,17 +311,146 @@ All of Emacs' commands are available explicitly via =Alt+X=.  For any commands t
   (amx-mode 1)
 #+END_SRC
 
-** TODO Coding with JavaScript/TypeScript
+** Coding with JavaScript/TypeScript
+
+Modern Emacs includes tree-sitter support, which provides fast and accurate syntax highlighting for JavaScript and TypeScript.  By remapping the default modes to their tree-sitter variants, you get a much better editing experience out-of-the-box.
+
+#+BEGIN_SRC elisp
+  ;; Enable tree-sitter for JavaScript
+  (add-to-list 'major-mode-remap-alist '(javascript-mode . js-ts-mode))
+
+  ;; Enable tree-sitter for TypeScript
+  (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
+  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
+#+END_SRC
 
 *** Syntax Checking
 
-*** Autocompletion (simple/advanced)
+Flycheck is an excellent on-the-fly syntax checker for Emacs.  It integrates with linters like ESLint for JavaScript, and can use the TypeScript compiler itself to check TypeScript code.
+
+For JavaScript, simply enable =flycheck-mode= in =js-ts-mode=:
+
+#+BEGIN_SRC elisp
+  (require 'flycheck)
+
+  (defun my-javascript-mode-hook ()
+    (flycheck-mode))
+
+  (add-hook 'js-ts-mode-hook #'my-javascript-mode-hook)
+#+END_SRC
+
+For TypeScript, use the Tide package, which provides deep integration with the TypeScript language server.  Tide handles both syntax checking and intelligent code completion.  You can also chain Tide's TypeScript checker with ESLint:
+
+#+BEGIN_SRC elisp
+  (require 'tide)
+  (require 'company)
+
+  (defun my-setup-tide ()
+    (tide-setup)
+    (flycheck-mode)
+    (company-mode))
+
+  (add-hook 'typescript-ts-mode-hook #'my-setup-tide)
+  (add-hook 'tsx-ts-mode-hook #'my-setup-tide)
+
+  ;; Check TypeScript, then ESLint
+  (flycheck-add-next-checker 'typescript-tide 'javascript-eslint)
+  (flycheck-add-next-checker 'tsx-tide 'javascript-eslint)
+#+END_SRC
+
+*** Autocompletion
+
+Tide (covered above) provides intelligent autocompletion for TypeScript via Company mode.  Company will suggest completions as you type, showing available properties, methods, and type information.
+
+For basic JavaScript projects without TypeScript, you can use a simpler autocomplete solution.  The =auto-complete= package provides text-based completions that work across all programming modes:
+
+#+BEGIN_SRC elisp
+  (require 'auto-complete)
+
+  (global-auto-complete-mode t)
+  (setq ac-auto-start 2) ; start after 2 characters
+  (setq ac-ignore-case nil) ; case-sensitive completion
+#+END_SRC
 
 *** Snippets
 
-** TODO Writing with Markdown and Org
+YASnippet is a template system that lets you quickly insert common code patterns.  Type an abbreviation and press =Ctrl+TAB= to expand it into a full snippet, then tab through the placeholders to fill them in.
+
+#+BEGIN_SRC elisp
+  (require 'yasnippet)
+
+  ;; Store snippets in your config directory
+  (setq yas-snippet-dirs `(,(concat user-emacs-directory "Snippets")))
+
+  (yas-reload-all)
+
+  ;; Use Ctrl+Tab to expand snippets (avoiding conflicts with other tab uses)
+  (define-key yas-minor-mode-map (kbd "<tab>") nil)
+  (define-key yas-minor-mode-map (kbd "TAB") nil)
+  (define-key yas-minor-mode-map (kbd "<C-tab>") #'yas-insert-snippet)
+
+  ;; Enable snippets in programming modes
+  (add-hook 'prog-mode-hook #'yas-minor-mode)
+#+END_SRC
+
+Create a =Snippets/js-ts-mode= directory in your =~/.emacs.d/= folder to store JavaScript snippets, and a =Snippets/typescript-ts-mode= directory for TypeScript snippets.  Each snippet is a small text file with special placeholders.
+
+** Writing with Markdown and Org
+
+Emacs supports both Markdown and Org Mode for writing documentation, notes, and other long-form text.  Both modes benefit from visual line wrapping, which makes prose easier to read and edit by wrapping lines at word boundaries instead of at a fixed column width.
+
+*** Markdown
+
+Markdown mode provides syntax highlighting and editing commands for Markdown files.  Enabling =visual-line-mode= ensures text wraps naturally as you resize the window.
+
+#+BEGIN_SRC elisp
+  (require 'markdown-mode)
+
+  (add-hook 'markdown-mode-hook #'visual-line-mode)
+
+  (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+  (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+#+END_SRC
+
+*** Org Mode
+
+Org mode is Emacs' native format for structured documents.  It's incredibly powerful, supporting everything from simple note-taking to complex project planning and literate programming.  For basic writing, it's similar to Markdown but with more features.
+
+#+BEGIN_SRC elisp
+  (require 'org-mode)
+
+  (add-hook 'org-mode-hook #'visual-line-mode)
+#+END_SRC
 
 *** Generating Previews
+
+Both Markdown and Org files can be previewed as HTML in your browser.  This is useful for seeing how your document will look when rendered, especially if you're writing documentation that will be published online.
+
+For Markdown, install the =marked= command-line tool (=npm i -g marked=), then configure Emacs to use it:
+
+#+BEGIN_SRC elisp
+  ;; Set the markdown preview command
+  (setq markdown-command "marked")
+
+  ;; Bind Ctrl+P to preview
+  (define-key markdown-mode-map (kbd "C-p") #'markdown-preview)
+#+END_SRC
+
+For Org mode, Emacs has built-in HTML export functionality.  Here's a function that exports your Org file to HTML and opens it in your browser:
+
+#+BEGIN_SRC elisp
+  (require 'ox) ; org export
+
+  (defun my-org-preview ()
+    (interactive)
+    (browse-url-of-buffer
+     (let ((org-export-show-temporary-export-buffer nil))
+       (org-html-export-as-html))))
+
+  (define-key org-mode-map (kbd "C-p") #'my-org-preview)
+#+END_SRC
+
+In both modes, press =Ctrl+P= to preview your document in your default web browser.
 
 * What's Mine is Yours
 
