@@ -85,9 +85,15 @@
 (setq ido-use-faces nil) ; disable ido faces to see flx highlights
 (setq gc-cons-threshold 20000000) ; recommended for better GC with flx
 
+(defun my-ido-select-current-directory ()
+  "Select the current directory (.) and exit."
+  (interactive)
+  (setq ido-exit 'done)
+  (setq ido-text ".")
+  (exit-minibuffer))
+
 (defun my-ido-setup-hook ()
-  ;; Escape hatch to open directories via `find-file'
-  (define-key ido-completion-map (kbd "C-o") #'ido-fallback-command))
+  (define-key ido-completion-map (kbd "C-o") #'my-ido-select-current-directory))
 
 (add-hook 'ido-setup-hook #'my-ido-setup-hook)
 
