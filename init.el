@@ -214,6 +214,7 @@
 (defun my-setup-tide ()
   (tide-setup)
   (flycheck-mode)
+  (eldoc-mode)
   (company-mode))
 
 (add-hook 'typescript-ts-mode-hook #'my-setup-tide)

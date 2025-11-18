@@ -379,7 +379,7 @@ With these configured, you can place your cursor on any function or variable nam
 
 *** TypeScript Language Server
 
-For TypeScript, use the Tide package, which provides deep integration with the TypeScript language server.  Tide handles both syntax checking and intelligent code completion.  You can also chain Tide's TypeScript checker with ESLint:
+For TypeScript, use the Tide package, which provides deep integration with the TypeScript language server.  Tide handles both syntax checking and intelligent code completion.  It also integrates with ElDoc mode, which displays function signatures and documentation in the minibuffer as you type.  You can also chain Tide's TypeScript checker with ESLint:
 
 #+BEGIN_SRC elisp
   (require 'tide)
@@ -388,6 +388,7 @@ For TypeScript, use the Tide package, which provides deep integration with the T
   (defun my-setup-tide ()
     (tide-setup)
     (flycheck-mode)
+    (eldoc-mode)
     (company-mode))
 
   (add-hook 'typescript-ts-mode-hook #'my-setup-tide)
