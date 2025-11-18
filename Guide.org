@@ -410,7 +410,6 @@ For basic JavaScript projects without TypeScript, you can use a simpler autocomp
 
   (global-auto-complete-mode t)
   (add-to-list 'ac-modes 'js-ts-mode)
-  (setq ac-ignore-case nil)
 #+END_SRC
 
 *** Snippets

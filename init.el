@@ -230,7 +230,6 @@
 
 (global-auto-complete-mode t)
 (add-to-list 'ac-modes 'js-ts-mode)
-(setq ac-ignore-case nil)
 
 ;;; Snippets
 
