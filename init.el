@@ -188,16 +188,12 @@
 
 ;;; JavaScript
 
-(require 'flycheck)
 (require 'js)
 
 ;; Enable tree-sitter for JavaScript
 (add-to-list 'major-mode-remap-alist '(javascript-mode . js-ts-mode))
 
-(defun my-javascript-mode-hook ()
-  (flycheck-mode))
-
-(add-hook 'js-ts-mode-hook #'my-javascript-mode-hook)
+(add-hook 'js-ts-mode-hook #'flycheck-mode)
 
 ;; Jump to definition
 (define-key js-ts-mode-map (kbd "M-.") #'js-ts-defs-jump-to-definition)

@@ -353,12 +353,7 @@ Flycheck is an excellent on-the-fly syntax checker for Emacs.  It integrates wit
 For JavaScript, simply enable =flycheck-mode= in =js-ts-mode=:
 
 #+BEGIN_SRC elisp
-  (require 'flycheck)
-
-  (defun my-javascript-mode-hook ()
-    (flycheck-mode))
-
-  (add-hook 'js-ts-mode-hook #'my-javascript-mode-hook)
+  (add-hook 'js-ts-mode-hook #'flycheck-mode)
 #+END_SRC
 
 *** Jumping to Definitions
