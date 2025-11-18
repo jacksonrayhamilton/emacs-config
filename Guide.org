@@ -390,8 +390,8 @@ For basic JavaScript projects without TypeScript, you can use a simpler autocomp
   (require 'auto-complete)
 
   (global-auto-complete-mode t)
-  (setq ac-auto-start 2) ; start after 2 characters
-  (setq ac-ignore-case nil) ; case-sensitive completion
+  (add-to-list 'ac-modes 'js-ts-mode)
+  (setq ac-ignore-case nil)
 #+END_SRC
 
 *** Snippets

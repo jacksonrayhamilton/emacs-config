@@ -224,7 +224,7 @@
 (require 'auto-complete)
 
 (global-auto-complete-mode t)
-(setq ac-auto-start 2)
+(add-to-list 'ac-modes 'js-ts-mode)
 (setq ac-ignore-case nil)
 
 ;;; Snippets
