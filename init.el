@@ -255,6 +255,13 @@
 
 (add-hook 'org-mode-hook #'visual-line-mode)
 
+;; Disable messy export settings
+(setq org-export-with-toc nil)
+(setq org-export-with-section-numbers nil)
+(setq org-export-with-author nil)
+(setq org-export-time-stamp-file nil)
+(setq org-html-validation-link nil)
+
 (defun my-org-preview ()
   (interactive)
   (browse-url-of-buffer

@@ -460,6 +460,13 @@ Emacs has built-in HTML export functionality.  Here's a function that exports yo
 #+BEGIN_SRC elisp
   (require 'ox) ; org export
 
+  ;; Disable messy export settings
+  (setq org-export-with-toc nil)
+  (setq org-export-with-section-numbers nil)
+  (setq org-export-with-author nil)
+  (setq org-export-time-stamp-file nil)
+  (setq org-html-validation-link nil)
+
   (defun my-org-preview ()
     (interactive)
     (browse-url-of-buffer
