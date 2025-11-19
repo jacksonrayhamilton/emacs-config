@@ -527,6 +527,38 @@ Everyone uses Git!!  Make =.gitignore= and similar files pretty.
   (require 'git-modes)
 #+END_SRC
 
+** Essential Settings
+
+Emacs has oodles of miscellaneous settings that you can (and probably will want to) customize.  There are too many for me to list here and their usefulness will depend on your usage patterns.
+
+However, there are a few features that I can't imagine not having turned-on.
+
+*** Persistence Across Sessions
+
+If I ever want to restart Emacs (such as to try out config changes, or due to restarting my computer), then it'd be nice if Emacs would reopen all the files I had open, avoiding any disruption to my ongoing tasks.  =desktop-save-mode= does exactly that.
+
+If you ever want to drop all your open files, you can just run =desktop-clear= via =Alt+X=.
+
+#+BEGIN_SRC elisp
+  (desktop-save-mode 1)
+#+END_SRC
+
+*** EditorConfig
+
+If you write software with others, then it's good for team cohesion and code quality to have a consistent set of formatting rules everyone follows.  EditorConfig largely solves that problem.  As long as you have =.editorconfig= files in all the projects you work on, you won't need to configure Emacs to format code in a particular way, nor will you need to change your configuration whenever a project's conventions don't agree with your defaults.
+
+#+BEGIN_SRC elisp
+  (editorconfig-mode 1)
+#+END_SRC
+
+*** Automatic Parenthesis, Bracket, Brace, & Quote Pairing
+
+Always having these syntax elements balanced is convenient when you're writing code.  It helps to avoid syntax errors.  It's even useful for quotes when you're writing in a natural language.
+
+#+BEGIN_SRC elisp
+  (electric-pair-mode)
+#+END_SRC
+
 * What's Mine is Yours
 
 Like what you've read about here?  I went ahead and packaged up all my essential configs - everything covered in this document - into a handy "starter config" that you can download and use to initialize your own Emacs installation.

@@ -51,6 +51,17 @@
 
 (add-hook 'emacs-startup-hook #'my-treesit-install-all-languages)
 
+;;; Essential Settings
+
+;; Save sessions
+(desktop-save-mode 1)
+
+;; Apply EditorConfig rules
+(editorconfig-mode 1)
+
+;; Automatically pair parentheses, quotation marks, etc.
+(electric-pair-mode)
+
 ;;; Theme and Appearance
 
 (setq inhibit-splash-screen t)
