@@ -454,9 +454,9 @@ TypeScript inherits all the JavaScript snippets, extending them with proper type
 
 ** Writing with Org Mode
 
-Org mode is Emacs' native format for structured documents.  It's incredibly powerful, supporting everything from simple note-taking to complex project planning and literate programming.  It's excellent for writing documentation, maintaining TODO lists, and creating structured content.
+Org mode is Emacs' native format for structured documents.  I like using it for note-taking, maintaining my many "to-do" lists, and for preparing documentation (like this guide!)
 
-Enabling =visual-line-mode= makes prose easier to read and edit by wrapping lines at word boundaries instead of at a fixed column width.
+I recommend enabling =visual-line-mode= here so paragraphs flow like in a normal document, rather than extend outside the frame.
 
 #+BEGIN_SRC elisp
   (add-hook 'org-mode-hook #'visual-line-mode)
@@ -464,9 +464,9 @@ Enabling =visual-line-mode= makes prose easier to read and edit by wrapping line
 
 *** Generating Previews
 
-Org files can be previewed as HTML in your browser.  This is useful for seeing how your document will look when rendered, especially if you're writing documentation that will be published online.
+Org files can be exported to HTML.  After making some tweaks to the default settings, I found the formatting that Emacs uses to be pleasant-to-read.
 
-Emacs has built-in HTML export functionality.  Here's a function that exports your Org file to HTML and opens it in your browser:
+Here's a function that previews your exported Org file in your default web browser (triggered by =Ctrl+P=):
 
 #+BEGIN_SRC elisp
   (require 'ox) ; org export
@@ -487,16 +487,14 @@ Emacs has built-in HTML export functionality.  Here's a function that exports yo
   (define-key org-mode-map (kbd "C-p") #'my-org-preview)
 #+END_SRC
 
-Press =Ctrl+P= to preview your document in your default web browser.
-
 *** Org Mode Snippets
 
-YASnippet works great with Org mode too.  Here are the included snippets:
+YASnippet works great with Org mode too!  Here are the included snippets:
 
 - =preamble= - Quickly insert a document header with title and author fields
 - =src block= - Insert a source code block with syntax highlighting
 
-These snippets make it faster to create well-formatted Org documents.
+These snippets make it easier to create well-formatted Org documents.  (I often struggled to remember the exact syntax for these oft-used constructs.)
 
 * What's Mine is Yours
 
