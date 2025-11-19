@@ -424,6 +424,11 @@ YASnippet is a template system that lets you quickly insert common code patterns
   (define-key yas-minor-mode-map (kbd "TAB") nil)
   (define-key yas-minor-mode-map (kbd "<C-tab>") #'yas-insert-snippet)
 
+  ;; Also use Ctrl+Tab to fill in placeholders (Tab could trigger completions)
+  (define-key yas-keymap [(tab)] nil)
+  (define-key yas-keymap (kbd "TAB") nil)
+  (define-key yas-keymap (kbd "<C-tab>") #'yas-next-field-or-maybe-expand)
+
   (add-hook 'prog-mode-hook #'yas-minor-mode)
   (add-hook 'org-mode-hook #'yas-minor-mode)
 
