@@ -496,6 +496,37 @@ YASnippet works great with Org mode too!  Here are the included snippets:
 
 These snippets make it easier to create well-formatted Org documents.  (I often struggled to remember the exact syntax for these oft-used constructs.)
 
+** Missing Modes
+
+I feel like anyone who's working on software projects will benefit from having support for a few more common file formats, noticeably-absent in the default Emacs distribution.
+
+*** Markdown
+
+It seems like most "README" files are written in this format, these days.
+
+Like with Org mode, I recommend enabling =visual-line-mode= so text flows naturally within your frame:
+
+#+BEGIN_SRC elisp
+  (require 'markdown-mode)
+  (add-hook 'markdown-mode-hook #'visual-line-mode)
+#+END_SRC
+
+*** YAML
+
+A really common config file format, used for things like GitHub Actions and much more.
+
+#+BEGIN_SRC elisp
+  (require 'yaml-mode)
+#+END_SRC
+
+*** Git Configuration Files
+
+Everyone uses Git!!  Make =.gitignore= and similar files pretty.
+
+#+BEGIN_SRC elisp
+  (require 'git-modes)
+#+END_SRC
+
 * What's Mine is Yours
 
 Like what you've read about here?  I went ahead and packaged up all my essential configs - everything covered in this document - into a handy "starter config" that you can download and use to initialize your own Emacs installation.

@@ -10,8 +10,8 @@
 ;; List of packages you want installed
 (setq package-selected-packages
       '(amx auto-complete company eat expand-region flx-ido flycheck
-        ido-completing-read+ js-ts-defs magit magit-ido projectile
-        restart-emacs tide yasnippet))
+        git-modes ido-completing-read+ js-ts-defs magit magit-ido
+        markdown-mode projectile restart-emacs tide yaml-mode yasnippet))
 
 ;; VC packages (installed from version control)
 (setq package-vc-selected-packages
@@ -274,6 +274,18 @@
      (org-html-export-as-html))))
 
 (define-key org-mode-map (kbd "C-p") #'my-org-preview)
+
+;;; Missing Modes
+
+;; Markdown
+(require 'markdown-mode)
+(add-hook 'markdown-mode-hook #'visual-line-mode)
+
+;; YAML
+(require 'yaml-mode)
+
+;; Git configuration files
+(require 'git-modes)
 
 ;;; Custom
 
