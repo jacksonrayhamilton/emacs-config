@@ -315,7 +315,7 @@ All of Emacs' commands are available explicitly via =Alt+X=.  For any commands t
 
 JavaScript and TypeScript are the languages I write the most code in.  My setup for those languages is the most-sophisticated and battle-tested one that I can showcase.
 
-Modern Emacs includes tree-sitter support, which provides fast and accurate syntax highlighting and automatic indentation for JavaScript and TypeScript.  I recommend remapping the default mode for JavaScript to the tree-sitter variant.  For TypeScript, Emacs /only/ comes with tree-sitter variants (TS & TSX), but they're not enabled by default.
+For the most-accurate syntax highlighting and indentation, as well as for features like jump-to-definition, I recommend using the Tree-sitter-powered =js-ts-mode= along with the TypeScript modes that are built-in to Emacs.
 
 #+BEGIN_SRC elisp
   (add-to-list 'major-mode-remap-alist '(javascript-mode . js-ts-mode))
@@ -324,7 +324,9 @@ Modern Emacs includes tree-sitter support, which provides fast and accurate synt
   (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
 #+END_SRC
 
-Also, once, you will need to install the grammars for each of these modes.  You will need a C/C++ compiler and linker installed in order to do this.  The following code will try to download and compile the grammars the first time you open Emacs.  If you run into errors, and want to try again, then either restart Emacs, or manually invoke the command =my-treesit-install-all-languages= (via =Alt+X=).
+Tree-sitter was made to abstract-away many of the complexities that arise when an editor tries to parse code, which is often either half-written or containing patterns too complex to accurately match with regular expressions; this is why Emacs is "smartest" when using it.  Plus, Tree-sitter is compiled to native code, so these modes should be fast!
+
+Once, you will need to install the grammars for each of these modes.  You will need a C/C++ compiler and linker installed in order to do this.  The following code will try to download and compile the grammars the first time you open Emacs.  If you run into errors, and want to try again, then either restart Emacs, or manually invoke the command =my-treesit-install-all-languages= (via =Alt+X=).
 
 #+BEGIN_SRC elisp
   (require 'treesit)
@@ -348,9 +350,9 @@ Also, once, you will need to install the grammars for each of these modes.  You 
 
 *** Syntax Checking
 
-Flycheck is an excellent on-the-fly syntax checker for Emacs.  It integrates with linters like ESLint for JavaScript, and can use the TypeScript compiler itself to check TypeScript code.
+I love having "squiggly lines" in my editor; I want to know about potential problems in my code /before/ I take the time to test it.  FlyCheck will utilize my ESLint installation to check my JavaScript for issues, and it will report any compilation errors from my TypeScript language server when I'm working with TypeScript.
 
-For JavaScript, simply enable =flycheck-mode= in =js-ts-mode=:
+For JavaScript, install and configure ESLint (=npm i -g eslint=), and enable =flycheck-mode= in =js-ts-mode=:
 
 #+BEGIN_SRC elisp
   (add-hook 'js-ts-mode-hook #'flycheck-mode)
@@ -358,9 +360,9 @@ For JavaScript, simply enable =flycheck-mode= in =js-ts-mode=:
 
 *** Jumping to Definitions
 
-Being able to quickly jump to a function or variable's definition is essential when navigating large codebases.  The standard Emacs keybinding for this is =Alt+.=.
+It's important to have an accurate understanding of the code you're working with; often, that involves tracing variables back to their source.  Using =Ctrl+F= to find a variable's definition can be time-consuming, and you need to be wary to disambiguate variables that are declared with the same name in multiple places.
 
-For JavaScript, use the =js-ts-defs= package, which leverages tree-sitter to find definitions within the current file:
+For JavaScript, use the =js-ts-defs= package, which leverages Tree-sitter to identify /definitively/ where functions and variables are defined - at least within a single file.  (Shameless plug - I made this package!)
 
 #+BEGIN_SRC elisp
   (require 'js)
@@ -368,13 +370,13 @@ For JavaScript, use the =js-ts-defs= package, which leverages tree-sitter to fin
   (define-key js-ts-mode-map (kbd "M-.") #'js-ts-defs-jump-to-definition)
 #+END_SRC
 
-For TypeScript, Tide automatically provides intelligent jump-to-definition that understands TypeScript's type system and can follow imports across files.  No additional configuration is needed - it works out-of-the-box once Tide is set up.
+For TypeScript, Tide provides intelligent jump-to-definition.  It understands how TypeScript compiles code, and can thus follow imports across files.  No additional configuration is needed - it works out-of-the-box once Tide is set up.
 
 With these configured, you can place your cursor on any function or variable name and press =Alt+.= to jump to where it's defined.  Press =Alt+,= to jump back to where you were.
 
 *** TypeScript Language Server
 
-For TypeScript, use the Tide package, which provides deep integration with the TypeScript language server.  Tide handles both syntax checking and intelligent code completion.  It also integrates with ElDoc mode, which displays function signatures and documentation in the minibuffer as you type.  You can also chain Tide's TypeScript checker with ESLint:
+For TypeScript, use the Tide package, which provides deep integration with the TypeScript language server.  Tide handles both syntax checking and intelligent code completion.  It also integrates with ElDoc mode, which displays function signatures and documentation in the minibuffer as you type.  You can also chain Tide's TypeScript checker with ESLint, unlocking additional code quality feedback that TypeScript may not provide:
 
 #+BEGIN_SRC elisp
   (require 'tide)
@@ -407,9 +409,11 @@ For basic JavaScript projects without TypeScript, you can use a simpler autocomp
   (add-to-list 'ac-modes 'js-ts-mode)
 #+END_SRC
 
+In both modes, you use =TAB= to accept any completions.
+
 *** Snippets
 
-YASnippet is a template system that lets you quickly insert common code patterns.  Press =Ctrl+TAB= to be prompted with a list of snippets, choose one with Ido-powered fuzzy matching, then tab through any placeholders to fill in the chosen snippet.
+YASnippet is a template system that lets you quickly insert common code patterns.  Press =Ctrl+TAB= to be prompted with a list of snippets, choose one with Ido-powered fuzzy matching, then =Ctrl+TAB= through any placeholders to fill in the chosen template.
 
 #+BEGIN_SRC elisp
   (require 'yasnippet)
@@ -437,14 +441,16 @@ YASnippet is a template system that lets you quickly insert common code patterns
     (replace-regexp-in-string "'" "\\\\'" str))
 #+END_SRC
 
-I've included several useful snippets for debugging JavaScript code.  These are productivity boosters that I use constantly:
+Ordinarily, YASnippet users type out a snippet name /first/ and then use =TAB= to expand it.  However, I don't use snippets as often as I accept autocomplete suggestions, which I also bind to =TAB=, and I've found that overloading my keys can cause annoying conflicts; thus, I chose to use =Ctrl-TAB= to expand snippets, instead.  Also, I prefer to be prompted with all my snippet names and to fuzzy-match my way to a choice; I could never remember the terse names I used to assign to my snippets to make them "easy" to expand.  Fuzzy matching implicitly reduces typing.
 
-- =import util= - Imports Node.js's =util= module, which is needed for advanced object inspection
-- =inspect object= - Uses =util.inspect()= to log an object with colors, full depth, and hidden properties visible.  Perfect for debugging complex objects
-- =log expression= - Inserts =console.log('DEBUG <expression>', <expression>)= where the expression name is automatically populated.  This makes it easy to see both what you're logging and its value
-- =stack trace= - Generates a stack trace at the current point in your code without throwing an error.  Useful for understanding how you got to a particular line of code
+I've included several useful snippets for debugging JavaScript code:
 
-TypeScript inherits all the JavaScript snippets (via =.yas-parents=), and also includes a TypeScript-specific version of =stack trace= with proper type annotations.
+- =import util= - Imports Node's =util= module
+- =inspect object= - Uses =util.inspect()= to log an object fully, since Node's =console.log= will sometimes omit properties or truncate large amounts of data
+- =log expression= - Inserts =console.log('DEBUG <expression>', <expression>)= where the expression name is automatically populated.  This makes it easy to see both what you're logging and its value.  A "DEBUG" keyword makes the message easy to filter.
+- =stack trace= - Generates a stack trace at the current point in your code without throwing an error.  Useful for understanding how you got to a particular line of code.
+
+TypeScript inherits all the JavaScript snippets, extending them with proper type annotations where necessary.
 
 ** Writing with Org Mode
 
