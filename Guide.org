@@ -466,7 +466,7 @@ YASnippet is a template system that lets you quickly insert common code patterns
     (replace-regexp-in-string "'" "\\\\'" str))
 #+END_SRC
 
-Ordinarily, YASnippet users type out a snippet name /first/ and then use =TAB= to expand it.  However, I don't use snippets as often as I accept autocomplete suggestions, which I also bind to =TAB=, and I've found that overloading my keys can cause annoying conflicts; thus, I chose to use =Ctrl-TAB= to expand snippets, instead.  Also, I prefer to be prompted with all my snippet names and to fuzzy-match my way to a choice; I could never remember the terse names I used to assign to my snippets to make them "easy" to expand.  Fuzzy matching implicitly reduces typing.
+Ordinarily, YASnippet users type out a snippet name /first/ and then use =TAB= to expand it.  However, I don't use snippets as often as I accept autocomplete suggestions, which I also bind to =TAB=, and I've found that overloading my keys can cause annoying conflicts; thus, I chose to use =Ctrl+TAB= to expand snippets, instead.  Also, I prefer to be prompted with all my snippet names and to fuzzy-match my way to a choice; I could never remember the terse names I used to assign to my snippets to make them "easy" to expand.  Fuzzy matching implicitly reduces typing.
 
 I've included several useful snippets for debugging JavaScript code:
 
