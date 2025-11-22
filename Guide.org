@@ -1,8 +1,6 @@
 #+title: Guide to Emacs: How I Use It
 #+author: Jackson Ray Hamilton
 
-* Making My Own Kitchen Sink
-
 Emacs, and its packages, provide a more-or-less comprehensive suite of tools for editing text - and ultimately, for building projects and producing code.  However, it's not all plug-and-play; in this ecosystem, there are lots of settings you need to tweak and tools you need to discover, install, and master, in order to craft an experience that's best for you.  What you'll have by the end of your customization journey is a "kitchen sink" - a workspace in which you can effortlessly navigate codebases and maintain them.  That's what I feel I've achieved over the last decade+ of using Emacs.
 
 What follows are all the tips and tricks I have for anyone who wants to learn and master this awesome tool.  Everything here you can copy into your own config file, which can be saved to: =~/.emacs.d/init.el=
