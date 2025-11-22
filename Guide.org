@@ -1,4 +1,4 @@
-#+title: Guide to Emacs: An Editor for a Lifetime
+#+title: Guide to Emacs: How I Use It
 #+author: Jackson Ray Hamilton
 
 * Making My Own Kitchen Sink
