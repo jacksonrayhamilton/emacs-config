@@ -596,4 +596,11 @@ To get started, copy these files/directories to your =~/.emacs.d/= directory:
 - =init.el= - The main configuration file
 - =Snippets/= - The complete snippets directory with all the JavaScript, TypeScript, and Org mode snippets
 
+And make sure to run these scripts to install all the necessary dependencies:
+
+#+BEGIN_SRC sh
+  emacs --script install-packages.el
+  emacs --script install-grammars.el
+#+END_SRC
+
 If there's anything you want to add, change, or remove about my config, then go for it!  You have your own copy now and you can make it your own.  Or, start from scratch, like I did, and pull in whatever bits of mine that you like.

@@ -6,7 +6,14 @@ Contained here is a "starter config" that:
 - Fixes up some of the "questionable" defaults in Emacs, and...
 - Equips users with some really powerful tools for working on software projects!
 
-Install the latest Emacs and give it a try!  Copy "init.el" and the "Snippets" directory to a directory in your home called: =~/.emacs.d/=.  Then launch the Emacs app.
+Install the latest Emacs and give it a try!  Copy "init.el" and the "Snippets" directory to a directory in your home called: =~/.emacs.d/=.  Also run the included scripts to install all the necessary dependencies:
+
+#+BEGIN_SRC sh
+  emacs --script install-packages.el
+  emacs --script install-grammars.el
+#+END_SRC
+
+Then launch the Emacs app.
 
 You can read my complete guide to this config in: "Guide.org"
 
