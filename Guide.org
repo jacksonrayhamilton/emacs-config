@@ -479,7 +479,7 @@ TypeScript inherits all the JavaScript snippets, extending them with proper type
 
 ** Writing with Org Mode
 
-Org mode is Emacs' native format for structured documents.  I like using it for note-taking, maintaining my many "to-do" lists, and for preparing documentation (like this guide!)
+Org Mode is Emacs' native format for structured documents.  I like using it for note-taking, maintaining my many "to-do" lists, and for preparing documentation (like this guide!)
 
 I recommend enabling =visual-line-mode= here so paragraphs flow like in a normal document, rather than extend outside the frame.
 
@@ -514,7 +514,7 @@ Here's a function that previews your exported Org file in your default web brows
 
 *** Org Mode Snippets
 
-YASnippet works great with Org mode too!  Here are the included snippets:
+YASnippet works great with Org Mode too!  Here are the included snippets:
 
 - =preamble= - Quickly insert a document header with title and author fields
 - =src block= - Insert a source code block with syntax highlighting
@@ -529,7 +529,7 @@ I feel like anyone who's working on software projects will benefit from having s
 
 It seems like most "README" files are written in this format, these days.
 
-Like with Org mode, I recommend enabling =visual-line-mode= so text flows naturally within your frame:
+Like with Org Mode, I recommend enabling =visual-line-mode= so text flows naturally within your frame:
 
 #+BEGIN_SRC elisp
   (require 'markdown-mode)
@@ -622,7 +622,7 @@ Like what you've read about here?  I went ahead and packaged up all my essential
 To get started, copy these files/directories to your =~/.emacs.d/= directory:
 
 - =init.el= - The main configuration file
-- =Snippets/= - The complete snippets directory with all the JavaScript, TypeScript, and Org mode snippets
+- =Snippets/= - The complete snippets directory with all the JavaScript, TypeScript, and Org Mode snippets
 
 And make sure to run these scripts to install all the necessary dependencies:
 
