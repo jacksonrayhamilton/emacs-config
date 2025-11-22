@@ -131,6 +131,26 @@ Ido ("interactive do") is a user-friendly interface that can be enabled for sele
   (setq gc-cons-threshold 20000000) ; recommended for better GC with flx
 #+END_SRC
 
+When using Ido to open files, there are a couple of customizations that I feel improve the experience:
+
+- =Ctrl+O=, typed a second time while selecting a file, instead opens the current directory from the selection interface.  This essentially turns Ido into a high-speed file browser!
+- =SPACE=, re-bound to itself, allows typing the "Space" character, so as to create new files with spaces in their names.  Normally this is not possible in Ido, so having this ability enables Ido to either find OR create any file.
+
+#+BEGIN_SRC elisp
+  (defun my-ido-select-current-directory ()
+    "Select the current directory (.) and exit."
+    (interactive)
+    (setq ido-exit 'done)
+    (setq ido-text ".")
+    (exit-minibuffer))
+
+  (defun my-ido-setup-hook ()
+    (define-key ido-completion-map (kbd "C-o") #'my-ido-select-current-directory)
+    (define-key ido-completion-map " " #'self-insert-command))
+
+  (add-hook 'ido-setup-hook #'my-ido-setup-hook)
+#+END_SRC
+
 ** Text Selection
 
 In Emacs you can select text with your trackpad/mouse, or by setting mark with =Ctrl+SPACE= and moving point with keyboard commands to manually create a region.
