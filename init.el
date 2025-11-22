@@ -13,6 +13,7 @@
 
 ;;; Theme and Appearance
 
+;; Disable unnecessary UI elements
 (setq inhibit-splash-screen t)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
@@ -30,13 +31,16 @@
 (set-frame-font my-default-font)
 (add-to-list 'default-frame-alist `(font . ,my-default-font))
 
+;; Note: requires `all-the-icons-install-fonts' to be run, once
 (load-theme 'zerodark t)
 (zerodark-setup-modeline-format)
 
 ;;; Standardization
 
+;; Assign undo, cut, copy, and paste to standard shortcuts
 (cua-mode)
 
+;; Remap remaining "standard" shortcuts
 (keymap-global-set "C-a" #'mark-whole-buffer)
 (keymap-global-set "C-o" #'find-file)
 (keymap-global-set "C-b" #'switch-to-buffer)
@@ -54,8 +58,10 @@
 
 ;;; Navigation
 
+;; View the directory of the current file
 (keymap-global-set "C-/" #'dired-jump)
 
+;; Interactively select things, everywhere, with fuzzy matching
 (require 'ido)
 (ido-mode 1)
 (ido-everywhere 1)
@@ -74,7 +80,10 @@
   (exit-minibuffer))
 
 (defun my-ido-setup-hook ()
+  ;; Use Ctrl+O to open directories in addition to files
   (define-key ido-completion-map (kbd "C-o") #'my-ido-select-current-directory)
+  ;; When naming files that don't exist, permit typing spaces, so you can create
+  ;; new files with spaces in their names
   (define-key ido-completion-map " " #'self-insert-command))
 
 (add-hook 'ido-setup-hook #'my-ido-setup-hook)
@@ -151,12 +160,11 @@
 
 (require 'js)
 
-;; Enable tree-sitter for JavaScript
+;; Enable Tree-sitter for JavaScript
 (add-to-list 'major-mode-remap-alist '(javascript-mode . js-ts-mode))
 
 (add-hook 'js-ts-mode-hook #'flycheck-mode)
 
-;; Jump to definition
 (define-key js-ts-mode-map (kbd "M-.") #'js-ts-defs-jump-to-definition)
 
 ;;; TypeScript
@@ -164,7 +172,7 @@
 (require 'tide)
 (require 'company)
 
-;; Enable tree-sitter for TypeScript
+;; Enable Tree-sitter for TypeScript
 (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
 
@@ -197,12 +205,12 @@
 
 (yas-reload-all)
 
-;; Use Ctrl+Tab to choose snippets (avoiding conflicts with other tab uses)
+;; Use Ctrl+Tab to choose snippets (avoiding conflicts with other Tab uses)
 (define-key yas-minor-mode-map (kbd "<tab>") nil)
 (define-key yas-minor-mode-map (kbd "TAB") nil)
 (define-key yas-minor-mode-map (kbd "<C-tab>") #'yas-insert-snippet)
 
-;; Also use Ctrl+Tab to fill in placeholders (Tab could trigger completions)
+;; Also use Ctrl+Tab to fill in placeholders
 (define-key yas-keymap [(tab)] nil)
 (define-key yas-keymap (kbd "TAB") nil)
 (define-key yas-keymap (kbd "<C-tab>") #'yas-next-field-or-maybe-expand)
@@ -216,7 +224,7 @@
 
 ;;; Org Mode
 
-(require 'ox) ; org export
+(require 'ox)
 
 (add-hook 'org-mode-hook #'visual-line-mode)
 
@@ -228,6 +236,7 @@
 (setq org-html-validation-link nil)
 
 (defun my-org-preview ()
+  "Open the current Org buffer in a web browser."
   (interactive)
   (browse-url-of-buffer
    (let ((org-export-show-temporary-export-buffer nil))
