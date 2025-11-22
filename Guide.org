@@ -3,9 +3,9 @@
 
 Emacs, and its packages, provide a more-or-less comprehensive suite of tools for editing text - and ultimately, for building projects and producing code.  However, it's not all plug-and-play; in this ecosystem, there are lots of settings you need to tweak and tools you need to discover, install, and master, in order to craft an experience that's best for you.  What you'll have by the end of your customization journey is a "kitchen sink" - a workspace in which you can effortlessly navigate codebases and maintain them.  That's what I feel I've achieved over the last decade+ of using Emacs.
 
-What follows are all the tips and tricks I have for anyone who wants to learn and master this awesome tool.  Everything here you can copy into your own config file, which can be saved to: =~/.emacs.d/init.el=
+What follows are all the tips and tricks I have for anyone who wants to become proficient with this awesome tool.  Everything here you can copy into your own config file, which can be saved to: =~/.emacs.d/init.el=
 
-A working config file implementing /all/ of this is also available in this directory; see "init.el"
+A working config file implementing /everything/ here is also available in this directory; see "init.el"
 
 * The Ins and Outs of My Configuration
 
@@ -80,7 +80,7 @@ The remaining shortcuts that I'd consider "standard" - and especially-useful for
   (keymap-global-set "C-r" #'query-replace)
 #+END_SRC
 
-It frustrates me that Emacs puts itself out-of-reach to anyone except highly-patient adepts willing to learn its strange default keymap, or else to those with the motivation to learn how to fix it.  Thankfully, it only takes a few lines of config to resolve this discomfort and make Emacs "feel like home."
+It frustrates me that Emacs puts itself out-of-reach to anyone except highly-patient adepts willing to learn its strange default keymap, or else to those possessing the motivation to learn how to fix it.  Thankfully, it only takes a few lines of config to resolve this discomfort and make Emacs "feel like home."
 
 Also, I recommend remapping your "Caps Lock" key to an additional =Ctrl= at the OS level.  It's a big, unimportant key, which is often a lot easier to press than the actual "Control" key on a keyboard, as far as all these keyboard shortcuts are concerned.
 
@@ -345,7 +345,7 @@ My script looks like this:
 
 *** Syntax Checking
 
-I love having "squiggly lines" in my editor; I want to know about potential problems in my code /before/ I take the time to test it.  FlyCheck will utilize my ESLint installation to check my JavaScript for issues, and it will report any compilation errors from my TypeScript language server when I'm working with TypeScript.
+I love having "squiggly lines" in my editor; I want to know about potential problems in my code /before/ I go to test it.  FlyCheck will utilize my ESLint installation to check my JavaScript for issues, and it will report any compilation errors from my TypeScript language server when I'm working with TypeScript.
 
 For JavaScript, install and configure ESLint (=npm i -g eslint=), and enable =flycheck-mode= in =js-ts-mode=:
 
