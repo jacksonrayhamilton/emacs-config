@@ -416,7 +416,6 @@ For TypeScript, use the Tide package, which provides deep integration with the T
   (add-hook 'typescript-ts-mode-hook #'my-setup-tide)
   (add-hook 'tsx-ts-mode-hook #'my-setup-tide)
 
-  ;; Check TypeScript, then ESLint
   (flycheck-add-next-checker 'typescript-tide 'javascript-eslint)
   (flycheck-add-next-checker 'tsx-tide 'javascript-eslint)
 #+END_SRC
@@ -443,17 +442,13 @@ YASnippet is a template system that lets you quickly insert common code patterns
 #+BEGIN_SRC elisp
   (require 'yasnippet)
 
-  ;; Store snippets in your config directory
   (setq yas-snippet-dirs `(,(concat user-emacs-directory "Snippets")))
 
   (yas-reload-all)
 
-  ;; Use Ctrl+Tab to choose snippets (avoiding conflicts with other tab uses)
   (define-key yas-minor-mode-map (kbd "<tab>") nil)
   (define-key yas-minor-mode-map (kbd "TAB") nil)
   (define-key yas-minor-mode-map (kbd "<C-tab>") #'yas-insert-snippet)
-
-  ;; Also use Ctrl+Tab to fill in placeholders (Tab could trigger completions)
   (define-key yas-keymap [(tab)] nil)
   (define-key yas-keymap (kbd "TAB") nil)
   (define-key yas-keymap (kbd "<C-tab>") #'yas-next-field-or-maybe-expand)
@@ -494,9 +489,8 @@ Org files can be exported to HTML.  After making some tweaks to the default sett
 Here's a function that previews your exported Org file in your default web browser (triggered by =Ctrl+P=):
 
 #+BEGIN_SRC elisp
-  (require 'ox) ; org export
+  (require 'ox)
 
-  ;; Disable messy export settings
   (setq org-export-with-toc nil)
   (setq org-export-with-section-numbers nil)
   (setq org-export-with-author nil)
