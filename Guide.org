@@ -80,6 +80,16 @@ The remaining shortcuts that I'd consider "standard" - and especially-useful for
   (keymap-global-set "C-r" #'query-replace)
 #+END_SRC
 
+Furthermore, some Emacs modes override these global keybindings with their own defaults.  To ensure your standardized shortcuts work consistently everywhere, you need to explicitly restore them in those modes:
+
+#+BEGIN_SRC elisp
+  (require 'dired)
+
+  (define-key dired-mode-map (kbd "C-o") #'find-file)
+  (define-key isearch-mode-map (kbd "C-v") #'isearch-yank-kill)
+  (define-key isearch-mode-map (kbd "C-f") #'isearch-repeat-forward)
+#+END_SRC
+
 It frustrates me that Emacs puts itself out-of-reach to anyone except highly-patient adepts willing to learn its strange default keymap, or else to those possessing the motivation to learn how to fix it.  Thankfully, it only takes a few lines of config to resolve this discomfort and make Emacs "feel like home."
 
 Also, I recommend remapping your "Caps Lock" key to an additional =Ctrl= at the OS level.  It's a big, unimportant key, which is often a lot easier to press than the actual "Control" key on a keyboard, as far as all these keyboard shortcuts are concerned.
