@@ -216,7 +216,6 @@
 
 ;;; Org Mode
 
-(require 'org)
 (require 'ox) ; org export
 
 (add-hook 'org-mode-hook #'visual-line-mode)
