@@ -74,7 +74,8 @@
   (exit-minibuffer))
 
 (defun my-ido-setup-hook ()
-  (define-key ido-completion-map (kbd "C-o") #'my-ido-select-current-directory))
+  (define-key ido-completion-map (kbd "C-o") #'my-ido-select-current-directory)
+  (define-key ido-completion-map " " #'self-insert-command))
 
 (add-hook 'ido-setup-hook #'my-ido-setup-hook)
 
