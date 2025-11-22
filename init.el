@@ -1,55 +1,5 @@
 ;; -*- lexical-binding: t; -*-
 
-;;; Packages
-
-(require 'package)
-(require 'package-vc)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(package-initialize)
-
-;; List of packages you want installed
-(setq package-selected-packages
-      '(amx auto-complete company eat expand-region flx-ido flycheck
-        git-modes ido-completing-read+ js-ts-defs magit magit-ido
-        markdown-mode projectile restart-emacs tide yaml-mode yasnippet
-        zerodark-theme))
-
-;; VC packages (installed from version control)
-(setq package-vc-selected-packages
-  '((claude-code :url "https://github.com/jacksonrayhamilton/claude-code.el")))
-
-;; Refresh and install missing packages at startup
-(unless package-archive-contents
-  (package-refresh-contents))
-
-(dolist (pkg package-selected-packages)
-  (unless (package-installed-p pkg)
-    (package-install pkg)))
-
-(dolist (pkg package-vc-selected-packages)
-  (unless (package-installed-p (car pkg))
-    (package-vc-install pkg)))
-
-;;; Grammars
-
-(require 'treesit)
-
-;; (Compatible with Emacs 30)
-(setq treesit-language-source-alist
-      '((javascript "https://github.com/tree-sitter/tree-sitter-javascript" "v0.23.1")
-        (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "v0.23.2" "tsx/src")
-        (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "v0.23.2" "typescript/src")))
-
-(defun my-treesit-install-all-languages ()
-  "Install all missing Tree-sitter grammars from `treesit-language-source-alist'."
-  (interactive)
-  (dolist (lang-source treesit-language-source-alist)
-    (let* ((lang (car lang-source)))
-      (unless (treesit-language-available-p lang)
-        (treesit-install-language-grammar lang)))))
-
-(add-hook 'emacs-startup-hook #'my-treesit-install-all-languages)
-
 ;;; Essential Settings
 
 ;; Save sessions

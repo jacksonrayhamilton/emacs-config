@@ -326,26 +326,23 @@ For the most-accurate syntax highlighting and indentation, as well as for featur
 
 Tree-sitter was made to abstract-away many of the complexities that arise when an editor tries to parse code, which is often either half-written or containing patterns too complex to accurately match with regular expressions; this is why Emacs is "smartest" when using it.  Plus, Tree-sitter is compiled to native code, so these modes should be fast!
 
-Once, you will need to install the grammars for each of these modes.  You will need a C/C++ compiler and linker installed in order to do this.  The following code will try to download and compile the grammars the first time you open Emacs.  If you run into errors, and want to try again, then either restart Emacs, or manually invoke the command =my-treesit-install-all-languages= (via =Alt+X=).
+Once, you will need to install the grammars for each of these modes.  You will need a C/C++ compiler and linker installed in order to do this.  You can install grammars from within Emacs, but I prefer to run a script to do it:
+
+#+BEGIN_SRC sh
+  emacs --script install-grammars.el
+#+END_SRC
+
+My script looks like this:
 
 #+BEGIN_SRC elisp
   (require 'treesit)
 
-  ;; (Compatible with Emacs 30)
   (setq treesit-language-source-alist
         '((javascript "https://github.com/tree-sitter/tree-sitter-javascript" "v0.23.1")
           (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "v0.23.2" "tsx/src")
           (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "v0.23.2" "typescript/src")))
 
-  (defun my-treesit-install-all-languages ()
-    "Install all missing Tree-sitter grammars from `treesit-language-source-alist'."
-    (interactive)
-    (dolist (lang-source treesit-language-source-alist)
-      (let* ((lang (car lang-source)))
-        (unless (treesit-language-available-p lang)
-          (treesit-install-language-grammar lang)))))
-
-  (add-hook 'emacs-startup-hook #'my-treesit-install-all-languages)
+  (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist))
 #+END_SRC
 
 *** Syntax Checking
@@ -557,6 +554,37 @@ Always having these syntax elements balanced is convenient when you're writing c
 
 #+BEGIN_SRC elisp
   (electric-pair-mode)
+#+END_SRC
+
+** Package Management
+
+It's possible to install and manage your packages entirely inside Emacs.  That said, I prefer to install my packages via a script; that way, Emacs is "ready-to-go" the first time I open it, without me ever needing to use a "package-less" version to set things up.  To install every package I mentioned throughout this guide, run the following command:
+
+#+BEGIN_SRC sh
+  emacs --script install-packages.el
+#+END_SRC
+
+My script looks like this:
+
+#+BEGIN_SRC elisp
+  (require 'package)
+  (require 'package-vc)
+
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+  (package-initialize)
+  (package-refresh-contents)
+
+  (setq package-selected-packages
+        '(amx auto-complete company eat expand-region flx-ido flycheck
+          git-modes ido-completing-read+ js-ts-defs magit magit-ido
+          markdown-mode projectile restart-emacs tide yaml-mode yasnippet
+          zerodark-theme))
+
+  (setq package-vc-selected-packages
+        '((claude-code :url "https://github.com/jacksonrayhamilton/claude-code.el")))
+
+  (package-install-selected-packages t)
+  (package-vc-install-selected-packages)
 #+END_SRC
 
 * What's Mine is Yours
