@@ -11,13 +11,12 @@
 (setq package-selected-packages
       '(amx auto-complete company eat expand-region flx-ido flycheck
         git-modes ido-completing-read+ js-ts-defs magit magit-ido
-        markdown-mode projectile restart-emacs tide yaml-mode yasnippet))
+        markdown-mode projectile restart-emacs tide yaml-mode yasnippet
+        zerodark-theme))
 
 ;; VC packages (installed from version control)
 (setq package-vc-selected-packages
-  '((claude-code :url "https://github.com/jacksonrayhamilton/claude-code.el")
-    (zerodark-theme :url "https://github.com/jacksonrayhamilton/zerodark-theme"
-                    :branch "optional-dependencies")))
+  '((claude-code :url "https://github.com/jacksonrayhamilton/claude-code.el")))
 
 ;; Refresh and install missing packages at startup
 (unless package-archive-contents
