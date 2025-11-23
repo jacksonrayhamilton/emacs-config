@@ -87,8 +87,8 @@
 ;; new files with spaces in their names
 (define-key ido-common-completion-map (kbd "SPC") #'self-insert-command)
 
-;; Use Ctrl+O (while selecting files) to open directories in addition to files
-(define-key ido-file-completion-map (kbd "C-o") #'my-ido-select-current-directory)
+;; Use Ctrl+. (while selecting files) to open directories in addition to files
+(define-key ido-file-dir-completion-map (kbd "C-.") #'my-ido-select-current-directory)
 
 ;;; Text Selection
 
