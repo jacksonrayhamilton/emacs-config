@@ -72,6 +72,10 @@
 (setq ido-use-faces nil) ; disable ido faces to see flx highlights
 (setq gc-cons-threshold 20000000) ; recommended for better GC with flx
 
+;; Auto merging behavior can yield surprising results; just disable it, limiting
+;; results to the immediate directory, providing a more consistent experience
+(setq ido-auto-merge-work-directories-length -1)
+
 (defun my-ido-select-current-directory ()
   "Select the current directory (.) and exit."
   (interactive)
@@ -104,6 +108,10 @@
       (isearch-yank-string region))))
 
 (add-hook 'isearch-mode-hook #'my-isearch-with-region)
+
+;; Don't downcase strings pasted into the isearch buffer; its important to get
+;; an exact match for code, respecting its original case
+(setq search-upper-case t)
 
 ;;; Screen Splitting
 
@@ -195,6 +203,9 @@
 
 (global-auto-complete-mode t)
 (add-to-list 'ac-modes 'js-ts-mode)
+
+;; The default behavior is dynamic; prefer consistent behavior
+(setq ac-ignore-case nil)
 
 ;;; Snippets
 

@@ -161,6 +161,12 @@ When using Ido to open files, there are a couple of customizations that I feel i
   (add-hook 'ido-setup-hook #'my-ido-setup-hook)
 #+END_SRC
 
+Another thing: Ido has an "auto merge" feature that may search other directories for files when it can't find them in the current directory.  This is enabled by default.  I find it surprising when results are found this way, and I also find that it interferes with Ido's capability to create new files by typing names that don't yet exist in the current directory.  For those reasons, I prefer to disable auto merging:
+
+#+BEGIN_SRC elisp
+  (setq ido-auto-merge-work-directories-length -1)
+#+END_SRC
+
 ** Text Selection
 
 In Emacs you can select text with your trackpad/mouse, or by setting mark with =Ctrl+SPACE= and moving point with keyboard commands to manually create a region.
@@ -191,6 +197,12 @@ Often I want to search for additional instances of a bit of text that's in a fil
         (isearch-yank-string region))))
 
   (add-hook 'isearch-mode-hook #'my-isearch-with-region)
+#+END_SRC
+
+Note: by default, Emacs downcases text pasted into the search buffer.  Since this can interfere with obtaining exact matches for code, I prefer to disable that behavior:
+
+#+BEGIN_SRC elisp
+  (setq search-upper-case t)
 #+END_SRC
 
 ** Screen Splitting
@@ -434,6 +446,12 @@ For basic JavaScript projects without TypeScript, you can use a simpler autocomp
 #+END_SRC
 
 In both modes, you use =TAB= to accept any completions.
+
+Something else to note: by default, =auto-complete= uses dynamic case matching, which I feel can lead to unexpected completion suggestions.  When I set it to be unconditionally case-sensitive, I find that the suggestions are slightly more predictable and thus more useful for coding:
+
+#+BEGIN_SRC elisp
+  (setq ac-ignore-case nil)
+#+END_SRC
 
 *** Snippets
 
