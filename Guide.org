@@ -447,7 +447,7 @@ For basic JavaScript projects without TypeScript, you can use a simpler autocomp
 
 In both modes, you use =TAB= to accept any completions.
 
-Something else to note: by default, =auto-complete= uses dynamic case matching, which I feel can lead to unexpected completion suggestions.  When I set it to be unconditionally case-sensitive, I find that the suggestions are slightly more predictable and thus more useful for coding:
+Something else to note: by default, =auto-complete= provides suggestions that are case-insensitive matches to what you typed, but it will dynamically begin to narrow its suggestions to case-sensitive matches if you type a capital letter.  I imagine this behavior was intended to enable users to auto-complete without using the "Shift" key, but in my experience the suggestions just tend to feel less predictable.  You're also less likely to receive a single suggestion, which would be speediest.  Therefore, I prefer to make =auto-complete= unconditionally case-sensitive:
 
 #+BEGIN_SRC elisp
   (setq ac-ignore-case nil)
