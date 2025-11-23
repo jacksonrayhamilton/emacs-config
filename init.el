@@ -83,14 +83,12 @@
   (setq ido-text ".")
   (exit-minibuffer))
 
-(defun my-ido-setup-hook ()
-  ;; Use Ctrl+O to open directories in addition to files
-  (define-key ido-completion-map (kbd "C-o") #'my-ido-select-current-directory)
-  ;; When naming files that don't exist, permit typing spaces, so you can create
-  ;; new files with spaces in their names
-  (define-key ido-completion-map " " #'self-insert-command))
+;; When naming files that don't exist, permit typing spaces, so you can create
+;; new files with spaces in their names
+(define-key ido-common-completion-map (kbd "SPC") #'self-insert-command)
 
-(add-hook 'ido-setup-hook #'my-ido-setup-hook)
+;; Use Ctrl+O (while selecting files) to open directories in addition to files
+(define-key ido-file-completion-map (kbd "C-o") #'my-ido-select-current-directory)
 
 ;;; Text Selection
 

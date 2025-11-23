@@ -143,8 +143,8 @@ Ido ("interactive do") is a user-friendly interface that can be enabled for sele
 
 When using Ido to open files, there are a couple of customizations that I feel improve the experience:
 
+- =SPACE=, re-bound to itself, allows typing the "Space" character, so as to create new files with spaces in their names.  (Normally =SPACE= does something else in Ido, thus limiting your ability to name files.)
 - =Ctrl+O=, typed a second time while selecting a file, instead opens the current directory from the selection interface.  This essentially turns Ido into a high-speed file browser!
-- =SPACE=, re-bound to itself, allows typing the "Space" character, so as to create new files with spaces in their names.  Normally this is not possible in Ido, so having this ability enables Ido to either find OR create any file.
 
 #+BEGIN_SRC elisp
   (defun my-ido-select-current-directory ()
@@ -154,11 +154,8 @@ When using Ido to open files, there are a couple of customizations that I feel i
     (setq ido-text ".")
     (exit-minibuffer))
 
-  (defun my-ido-setup-hook ()
-    (define-key ido-completion-map (kbd "C-o") #'my-ido-select-current-directory)
-    (define-key ido-completion-map " " #'self-insert-command))
-
-  (add-hook 'ido-setup-hook #'my-ido-setup-hook)
+  (define-key ido-common-completion-map (kbd "SPC") #'self-insert-command)
+  (define-key ido-file-completion-map (kbd "C-o") #'my-ido-select-current-directory)
 #+END_SRC
 
 Another thing: Ido has an "auto merge" feature that may search other directories for files when it can't find them in the current directory.  This is enabled by default.  I find it surprising when results are found this way, and I also find that it interferes with Ido's capability to create new files by typing names that don't yet exist in the current directory.  For those reasons, I prefer to disable auto merging:
